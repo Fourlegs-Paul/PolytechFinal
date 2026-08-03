@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Vercel, Supabase, Google Cloud Console을 처음 연결하는 실습 가이드" />
+  <meta name="theme-color" content="#07090d" />
+  <title>서비스 연결 가이드 | AI Agent Engineering</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./guide.css" />
+  <script defer src="./gsap.min.js?v=3.13.0"></script>
+  <script defer src="./ScrollTrigger.min.js?v=3.13.0"></script>
+  <script defer src="./guide.js?v=20260803"></script>
+</head>
+<body class="guide-page">
+  <div class="noise" aria-hidden="true"></div>
+  <div class="cursor-glow" aria-hidden="true"></div>
+  <div class="scroll-progress" aria-hidden="true"><span></span></div>
+
+  <header class="topbar guide-topbar">
+    <a class="brand" href="./index.html" aria-label="수업 요약으로 돌아가기">
+      <span class="brand-mark">A</span><span>Agent Engineering</span>
+    </a>
+    <nav class="nav guide-nav" aria-label="가이드 섹션">
+      <a href="#map">연결 지도</a><a href="#vercel">Vercel</a><a href="#supabase">Supabase</a>
+      <a href="#google">Google</a><a href="#env">환경변수</a><a href="#check">검증</a>
+    </nav>
+    <a class="back-link" href="./index.html">← 수업 요약</a>
+  </header>
+
+  <main>
+    <section class="guide-hero guide-shell" id="top">
+      <div class="guide-kicker">PRACTICAL SETUP · 2026 EDITION</div>
+      <h1>첫 로그인부터<br /><span class="gradient-text">실제 배포까지.</span></h1>
+      <p>Vercel, Supabase, Google Cloud Console을 하나의 로그인 흐름으로 연결합니다. 화면을 순서대로 따라가고, 각 단계의 완료 조건을 확인하세요.</p>
+      <div class="hero-route" aria-label="서비스 연결 흐름">
+        <span><b>01</b> GitHub</span><i></i><span><b>02</b> Vercel</span><i></i>
+        <span><b>03</b> Supabase</span><i></i><span><b>04</b> Google OAuth</span><i></i><span><b>05</b> App</span>
+      </div>
+      <div class="guide-alert"><span>SECURITY</span> 실제 키·비밀번호·토큰은 문서나 GitHub에 기록하지 않습니다. 이 페이지의 값은 모두 자리표시자입니다.</div>
+    </section>
+
+    <section class="guide-section guide-shell" id="map">
+      <div class="guide-heading"><span>00</span><div><p>CONNECTION MAP</p><h2>무엇을 어디에 연결하나요?</h2></div></div>
+      <div class="connection-map">
+        <article class="map-node github"><small>SOURCE</small><strong>GitHub</strong><p>코드와 변경 이력</p></article>
+        <div class="map-arrow"><span>push</span></div>
+        <article class="map-node vercel"><small>HOST</small><strong>Vercel</strong><p>빌드·배포·환경변수</p></article>
+        <div class="map-branch"><span>env</span><span>API</span></div>
+        <article class="map-node supabase"><small>BACKEND</small><strong>Supabase</strong><p>DB·Auth·RLS</p></article>
+        <div class="map-arrow"><span>OAuth</span></div>
+        <article class="map-node google"><small>IDENTITY</small><strong>Google</strong><p>동의 화면·Client</p></article>
+      </div>
+      <div class="map-notes">
+        <p><b>브라우저</b>는 Supabase URL과 publishable key로 접속합니다.</p>
+        <p><b>Supabase Auth</b>가 Google OAuth의 Client ID/Secret을 보관합니다.</p>
+        <p><b>Vercel</b>은 GitHub의 새 커밋을 감지해 Preview/Production을 배포합니다.</p>
+      </div>
+    </section>
+
+    <section class="guide-section guide-shell platform" id="vercel">
+      <div class="guide-heading"><span>01</span><div><p>DEPLOYMENT</p><h2>Vercel 프로젝트 만들기</h2></div><a href="https://vercel.com/new" target="_blank" rel="noreferrer">Vercel 열기 ↗</a></div>
+      <div class="step-grid">
+        <article class="step-card"><em>1</em><h3>GitHub로 로그인</h3><p>Vercel에 접속해 <b>Continue with GitHub</b>를 선택하고 저장소 접근 권한을 승인합니다.</p><small>완료: Dashboard가 보임</small></article>
+        <article class="step-card"><em>2</em><h3>저장소 가져오기</h3><p><b>Add New → Project</b>에서 GitHub 저장소를 찾고 <b>Import</b>를 누릅니다. 안 보이면 GitHub App 권한을 확인합니다.</p><small>완료: Configure Project 화면</small></article>
+        <article class="step-card"><em>3</em><h3>빌드 설정 확인</h3><p>Framework Preset과 Root Directory를 확인합니다. 모노레포라면 실제 앱의 <code>package.json</code>이 있는 하위 폴더를 지정합니다.</p><small>완료: Build/Output 자동 감지</small></article>
+        <article class="step-card"><em>4</em><h3>환경변수 입력</h3><p>아래 환경변수 표의 이름과 값을 등록하고 Production·Preview·Development 적용 범위를 고릅니다.</p><small>완료: 필요한 key가 모두 등록됨</small></article>
+        <article class="step-card"><em>5</em><h3>배포와 로그 확인</h3><p><b>Deploy</b> 후 Build Logs를 확인합니다. 성공하면 Production URL을 열어 첫 화면과 API 요청을 테스트합니다.</p><small>완료: Ready 상태 + 공개 URL</small></article>
+        <article class="step-card tip"><em>↻</em><h3>변경 후에는?</h3><p><code>main</code> 커밋은 Production, 다른 브랜치/PR은 Preview로 자동 배포됩니다. 환경변수 변경은 새 배포부터 적용됩니다.</p><small>필요하면 Redeploy 실행</small></article>
+      </div>
+    </section>
+
+    <section class="guide-section guide-shell platform" id="supabase">
+      <div class="guide-heading"><span>02</span><div><p>DATABASE & AUTH</p><h2>Supabase 프로젝트 만들기</h2></div><a href="https://supabase.com/dashboard" target="_blank" rel="noreferrer">Dashboard 열기 ↗</a></div>
+      <div class="step-grid">
+        <article class="step-card"><em>1</em><h3>로그인과 조직 선택</h3><p><b>Sign in with GitHub</b>로 로그인한 뒤 개인 또는 수업용 Organization을 선택합니다.</p><small>완료: Projects 화면</small></article>
+        <article class="step-card"><em>2</em><h3>New Project</h3><p>이름, 강한 Database Password, 가까운 Region을 정합니다. 비밀번호는 암호 관리 도구에 따로 보관합니다.</p><small>완료: 프로젝트 Provisioning 종료</small></article>
+        <article class="step-card"><em>3</em><h3>테이블과 RLS</h3><p>SQL Editor에서 수업 SQL을 실행합니다. 테이블마다 <b>Row Level Security</b>를 켜고 사용자별 정책을 만듭니다.</p><small>완료: Table Editor에 테이블 표시</small></article>
+        <article class="step-card"><em>4</em><h3>URL과 키 복사</h3><p><b>Connect</b> 또는 Project Settings에서 Project URL과 <b>Publishable key</b>를 복사해 로컬과 Vercel에 넣습니다.</p><small>완료: 클라이언트 생성 가능</small></article>
+        <article class="step-card"><em>5</em><h3>Auth URL 설정</h3><p>Authentication의 URL Configuration에서 Vercel Production URL을 Site URL로, 로컬/Preview 콜백을 Redirect Allow List에 추가합니다.</p><small>완료: 로그인 후 앱으로 복귀</small></article>
+        <article class="step-card warning"><em>!</em><h3>2026 체크포인트</h3><p>새 프로젝트는 테이블이 Data API에 자동 노출되지 않을 수 있습니다. Data API 설정·권한과 RLS를 각각 확인하세요.</p><small>RLS와 API 노출은 서로 다른 설정</small></article>
+      </div>
+      <div class="security-strip"><b>키 규칙</b><span><code>sb_publishable_…</code> 클라이언트 사용 가능 — RLS 필수</span><span><code>sb_secret_…</code> 서버 전용 — 브라우저 금지</span></div>
+    </section>
+
+    <section class="guide-section guide-shell platform" id="google">
+      <div class="guide-heading"><span>03</span><div><p>SOCIAL LOGIN</p><h2>Google OAuth 연결하기</h2></div><a href="https://console.cloud.google.com/auth/overview" target="_blank" rel="noreferrer">Console 열기 ↗</a></div>
+      <div class="oauth-flow">
+        <div><small>1 · APP</small><strong>로그인 클릭</strong></div><i>→</i><div><small>2 · SUPABASE</small><strong>Google로 이동</strong></div><i>→</i><div><small>3 · GOOGLE</small><strong>사용자 동의</strong></div><i>→</i><div><small>4 · CALLBACK</small><strong>세션 발급</strong></div>
+      </div>
+      <ol class="instruction-list">
+        <li><span>01</span><div><h3>Cloud 프로젝트 생성</h3><p>Google Cloud Console 상단의 프로젝트 선택기에서 <b>New Project</b>를 선택해 프로젝트를 만들고 활성 프로젝트로 지정합니다.</p></div></li>
+        <li><span>02</span><div><h3>Google Auth Platform 시작</h3><p><b>Branding</b>에서 앱 이름·지원 이메일을, <b>Audience</b>에서 Internal/External을 설정합니다. 수업 테스트라면 External + Test users에 본인 이메일을 등록합니다.</p></div></li>
+        <li><span>03</span><div><h3>최소 Scope 선택</h3><p><b>Data Access</b>에는 로그인에 필요한 <code>openid</code>, <code>userinfo.email</code>, <code>userinfo.profile</code>만 우선 사용합니다.</p></div></li>
+        <li><span>04</span><div><h3>Web OAuth Client 생성</h3><p><b>Clients → Create Client → Web application</b>을 선택합니다. Authorized JavaScript origins에는 로컬과 Vercel의 origin을 넣습니다.</p></div></li>
+        <li><span>05</span><div><h3>Supabase Callback 등록</h3><p>Authorized redirect URIs에는 Supabase Google Provider 화면에 표시된 주소를 정확히 붙여 넣습니다.</p><div class="copy-field"><code>https://&lt;PROJECT-REF&gt;.supabase.co/auth/v1/callback</code><button type="button" data-copy="https://&lt;PROJECT-REF&gt;.supabase.co/auth/v1/callback">복사</button></div></div></li>
+        <li><span>06</span><div><h3>Client 값을 Supabase에 입력</h3><p>생성된 Client ID와 Client Secret을 <b>Supabase → Authentication → Providers → Google</b>에 입력하고 Provider를 활성화합니다.</p></div></li>
+        <li><span>07</span><div><h3>앱에서 로그인 호출</h3><p>Supabase 클라이언트의 <code>signInWithOAuth({ provider: 'google' })</code>를 호출합니다. SSR/PKCE 앱은 앱의 callback route와 Redirect Allow List도 맞춰야 합니다.</p></div></li>
+      </ol>
+    </section>
+
+    <section class="guide-section guide-shell platform" id="env">
+      <div class="guide-heading"><span>04</span><div><p>ENVIRONMENT VARIABLES</p><h2>환경변수 이름과 위치</h2></div></div>
+      <div class="framework-switch" role="group" aria-label="프레임워크 선택"><button class="active" type="button" data-framework="next">Next.js</button><button type="button" data-framework="vite">Vite</button></div>
+      <div class="env-layout">
+        <div class="env-code">
+          <div class="code-head"><span>.env.local</span><button type="button" data-copy-target="#env-example">전체 복사</button></div>
+          <pre id="env-example" data-next="NEXT_PUBLIC_SUPABASE_URL=https://&lt;PROJECT-REF&gt;.supabase.co&#10;NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_xxxxx" data-vite="VITE_SUPABASE_URL=https://&lt;PROJECT-REF&gt;.supabase.co&#10;VITE_SUPABASE_PUBLISHABLE_KEY=sb_publishable_xxxxx"><code>NEXT_PUBLIC_SUPABASE_URL=https://&lt;PROJECT-REF&gt;.supabase.co
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_xxxxx</code></pre>
+        </div>
+        <div class="env-rules">
+          <article><b>Local</b><p>프로젝트 루트의 <code>.env.local</code>. 반드시 <code>.gitignore</code>에 포함합니다.</p></article>
+          <article><b>Vercel</b><p>Project → Settings → Environment Variables. 로컬과 <b>동일한 이름</b>으로 등록합니다.</p></article>
+          <article><b>Client 공개</b><p><code>NEXT_PUBLIC_</code> 또는 <code>VITE_</code>는 브라우저 번들에 노출됩니다. publishable 값만 사용합니다.</p></article>
+          <article><b>Server 비밀</b><p><code>sb_secret_</code>, legacy <code>service_role</code>, Google Client Secret은 클라이언트 접두사를 붙이면 안 됩니다.</p></article>
+        </div>
+      </div>
+      <div class="env-matrix" role="table" aria-label="환경변수 배치 표">
+        <div class="matrix-row head" role="row"><span>값</span><span>Local</span><span>Vercel</span><span>Browser</span></div>
+        <div class="matrix-row" role="row"><span>Supabase URL</span><b>✓</b><b>✓</b><b>가능</b></div>
+        <div class="matrix-row" role="row"><span>Publishable key</span><b>✓</b><b>✓</b><b>가능 · RLS</b></div>
+        <div class="matrix-row danger" role="row"><span>Secret / service role</span><b>서버만</b><b>서버만</b><b>절대 금지</b></div>
+        <div class="matrix-row danger" role="row"><span>Google Client Secret</span><b>Supabase 관리</b><b>직접 불필요</b><b>절대 금지</b></div>
+      </div>
+    </section>
+
+    <section class="guide-section guide-shell" id="check">
+      <div class="guide-heading"><span>05</span><div><p>FINAL CHECK</p><h2>끝났다고 판단하는 기준</h2></div></div>
+      <div class="checklist" data-checklist>
+        <label><input type="checkbox" /><span>GitHub 저장소의 <code>main</code> 브랜치가 Vercel Production에 연결됐다.</span></label>
+        <label><input type="checkbox" /><span>Vercel Build Logs가 오류 없이 Ready 상태다.</span></label>
+        <label><input type="checkbox" /><span>로컬과 Vercel에 같은 이름의 Supabase 환경변수가 있다.</span></label>
+        <label><input type="checkbox" /><span>Supabase 테이블의 RLS와 정책을 사용자 A/B로 점검했다.</span></label>
+        <label><input type="checkbox" /><span>Google Authorized redirect URI가 Supabase callback과 정확히 같다.</span></label>
+        <label><input type="checkbox" /><span>로컬 URL과 Production URL에서 Google 로그인·로그아웃을 각각 테스트했다.</span></label>
+        <label><input type="checkbox" /><span>브라우저 코드와 GitHub 기록에 secret이 없음을 검색했다.</span></label>
+      </div>
+      <div class="check-progress"><span></span><p><b>0</b> / 7 완료</p></div>
+    </section>
+
+    <section class="guide-section guide-shell source-section" id="sources">
+      <div class="guide-heading"><span>↗</span><div><p>CLASS NOTES & OFFICIAL DOCS</p><h2>노션 수업 자료와 공식 문서</h2></div></div>
+      <div class="source-grid">
+        <a href="https://www.notion.so/3a9a31731391818297e0ec70a5ebb6c9" target="_blank" rel="noreferrer"><small>NOTION · MASTERCLASS</small><strong>MD 하네스 → Vercel → Supabase → Google 로그인</strong><span>원문 보기 ↗</span></a>
+        <a href="https://www.notion.so/3aaa3173139180d583dbcb1f5cb9aa0c" target="_blank" rel="noreferrer"><small>NOTION · SETUP</small><strong>SUPABASE 설정</strong><span>원문 보기 ↗</span></a>
+        <a href="https://www.notion.so/3a4a3173139181f4954eedd7462f658c" target="_blank" rel="noreferrer"><small>NOTION · DEPLOY</small><strong>GitHub → Hermes API → Vercel 배포</strong><span>원문 보기 ↗</span></a>
+        <a href="https://vercel.com/docs/git" target="_blank" rel="noreferrer"><small>OFFICIAL · VERCEL</small><strong>Git 저장소 배포</strong><span>문서 보기 ↗</span></a>
+        <a href="https://supabase.com/docs/guides/auth/social-login/auth-google" target="_blank" rel="noreferrer"><small>OFFICIAL · SUPABASE</small><strong>Google Social Login</strong><span>문서 보기 ↗</span></a>
+        <a href="https://support.google.com/cloud/answer/15548748" target="_blank" rel="noreferrer"><small>OFFICIAL · GOOGLE</small><strong>Google Auth Platform</strong><span>문서 보기 ↗</span></a>
+      </div>
+      <p class="source-note">최종 확인: 2026-08-03 · 서비스 화면과 정책은 바뀔 수 있으므로 실제 설정 시 공식 문서를 함께 확인하세요.</p>
+    </section>
+  </main>
+
+  <footer class="guide-footer"><span>AI AGENT ENGINEERING · CONNECTION GUIDE</span><a href="#top">맨 위로 ↑</a></footer>
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="AI Agent Engineering 수업 최종 요약 — 에이전트, 하네스 엔지니어링, Markdown 기반 프로젝트 기억과 개발 루프" />
+  <meta name="theme-color" content="#07090d" />
+  <title>AI Agent Engineering — 프로젝트가 기억하게 하라</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="./styles.css" />
+  <script defer src="./gsap.min.js?v=3.13.0"></script>
+  <script defer src="./ScrollTrigger.min.js?v=3.13.0"></script>
+  <script defer src="./script.js?v=20260803"></script>
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="cursor-glow" aria-hidden="true"></div>
+  <div class="scroll-progress" aria-hidden="true"><span></span></div>
+
+  <header class="topbar">
+    <a class="brand" href="#hero" aria-label="맨 위로 이동">
+      <span class="brand-mark">A</span>
+      <span>Agent Engineering</span>
+    </a>
+    <nav class="nav" aria-label="주요 섹션">
+      <a href="#difference">차이</a>
+      <a href="#harness">하네스</a>
+      <a href="#memory">기억</a>
+      <a href="#workflow">워크플로</a>
+      <a href="#stack">도구</a>
+      <a href="#evidence">검증</a>
+      <a href="#voices">수업의 목소리</a>
+      <a href="#future">미래</a>
+      <a class="nav-guide" href="./guide.html">Guide ↗</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero section" id="hero" data-section="00">
+      <div class="hero-copy reveal">
+        <p class="eyebrow">KOREA POLYTECHNICS · AI AGENT ENGINEERING</p>
+        <h1>
+          대화에서 끝나지 않고<br />
+          <span class="gradient-text">프로젝트를 완성하는 법</span>
+        </h1>
+        <p class="hero-lead">
+          한 학기 동안 배운 에이전트, 프로젝트 기억, 개발 루프와 배포까지.
+          사람이 목표를 정하고 AI와 함께 결과를 검증하는 과정을 한 페이지에 담았습니다.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="#difference">핵심 흐름 탐색</a>
+          <button class="button ghost" type="button" data-copy="#final-loop">핵심 루프 복사</button>
+        </div>
+        <div class="hero-status" aria-label="핵심 개념">
+          <span><i></i> Agent</span>
+          <span><i></i> Markdown</span>
+          <span><i></i> Git</span>
+          <span><i></i> Evidence</span>
+        </div>
+      </div>
+
+      <div class="agent-orbit reveal" aria-label="사람, 에이전트, 프로젝트 기억과 도구가 하네스를 중심으로 연결된 시스템 다이어그램">
+        <p class="system-caption"><span>WORKING SYSTEM</span><strong>좋은 결과는 연결 구조에서 시작됩니다.</strong></p>
+        <div class="city-grid" aria-hidden="true">
+          <span class="building b1"></span><span class="building b2"></span><span class="building b3"></span>
+          <span class="building b4"></span><span class="building b5"></span><span class="building b6"></span>
+        </div>
+        <div class="orbit orbit-one"></div>
+        <div class="orbit orbit-two"></div>
+        <div class="orbit-node human-node">
+          <span class="node-icon">H</span><strong>Human</strong><small>목표 · 기준 · 책임</small>
+        </div>
+        <div class="orbit-node agent-node">
+          <span class="node-icon">A</span><strong>Agent</strong><small>계획 · 실행 · 보고</small>
+        </div>
+        <div class="orbit-node md-node">
+          <span class="node-icon">MD</span><strong>Memory</strong><small>규칙 · 맥락 · 결정</small>
+        </div>
+        <div class="orbit-node tools-node">
+          <span class="node-icon">↗</span><strong>Tools</strong><small>Code · DB · API</small>
+        </div>
+        <div class="orbit-center">
+          <span class="pulse-ring"></span><span class="pulse-ring delay"></span>
+          <div><small>HARNESS</small><strong>ENGINEERING</strong></div>
+        </div>
+        <div class="signal signal-one" aria-hidden="true"></div>
+        <div class="signal signal-two" aria-hidden="true"></div>
+      </div>
+
+      <div class="scroll-cue" aria-hidden="true"><span>SCROLL</span><i></i></div>
+    </section>
+
+    <section class="section split-section" id="difference" data-section="01">
+      <div class="section-heading reveal">
+        <p class="eyebrow">01 · CHAT TO ACTION</p>
+        <h2>기존 AI와 에이전트의 차이</h2>
+        <p>답변을 받는 데서 끝나지 않고, 목표를 실제 결과물로 바꿉니다.</p>
+      </div>
+
+      <div class="compare-grid">
+        <article class="compare-card muted reveal tilt-card">
+          <div class="card-number">01</div>
+          <p class="card-label">CONVERSATIONAL AI</p>
+          <h3>질문에 답하는 도구</h3>
+          <div class="mini-flow"><span>질문</span><i>→</i><span>답변</span><i>→</i><span>끝</span></div>
+          <ul><li>현재 대화 중심</li><li>결과를 직접 실행하지 않음</li><li>프로젝트 맥락이 쉽게 끊김</li></ul>
+        </article>
+
+        <article class="compare-card accent reveal tilt-card">
+          <div class="card-number">02</div>
+          <p class="card-label">AI AGENT</p>
+          <h3>목표를 수행하는 협업자</h3>
+          <div class="agent-flow"><span>검토</span><i></i><span>계획</span><i></i><span>개발</span><i></i><span>확인</span></div>
+          <ul><li>파일과 도구를 사용함</li><li>실패를 보고 다시 시도함</li><li>문서와 Git으로 작업을 이어감</li></ul>
+        </article>
+      </div>
+
+      <blockquote class="statement reveal"><span>“</span>에이전트는 천재가 아닙니다.<br /><strong>좋은 인수인계서를 받은 빠른 신입사원</strong>에 가깝습니다.</blockquote>
+    </section>
+
+    <section class="section harness-section" id="harness" data-section="02">
+      <div class="section-heading reveal">
+        <p class="eyebrow">02 · HARNESS ENGINEERING</p>
+        <h2>에이전트는 문서와 실행 환경으로 조율합니다.</h2>
+        <p>모델 하나의 능력보다, 어떤 문서를 읽고 어떤 도구와 권한을 사용하는지가 실제 결과를 결정합니다.</p>
+      </div>
+
+      <div class="harness-stage reveal">
+        <div class="file-stack" role="list" aria-label="프로젝트 핵심 문서">
+          <button class="file-card active" type="button" data-file="agents" role="listitem"><span>01</span><strong>AGENTS.md</strong><small>업무 방식과 금지사항</small></button>
+          <button class="file-card" type="button" data-file="project" role="listitem"><span>02</span><strong>PROJECT_BRIEF.md</strong><small>목적과 사용자</small></button>
+          <button class="file-card" type="button" data-file="ui" role="listitem"><span>03</span><strong>UI_REFERENCE.md</strong><small>디자인 장기기억</small></button>
+          <button class="file-card" type="button" data-file="api" role="listitem"><span>04</span><strong>API_CONTRACT.md</strong><small>외부 연결 규칙</small></button>
+          <button class="file-card" type="button" data-file="worklog" role="listitem"><span>05</span><strong>WORKLOG.md</strong><small>변경과 판단의 기록</small></button>
+        </div>
+
+        <div class="file-detail" aria-live="polite">
+          <div class="detail-top"><span class="detail-dot"></span><span id="file-path">/project/AGENTS.md</span><span class="detail-status">READ FIRST</span></div>
+          <pre id="file-content"><code># 에이전트 작업 규칙
+
+- 수정 전 현재 프로젝트를 먼저 확인한다.
+- 아직 수정하지 말고 계획부터 설명한다.
+- 관련 없는 파일은 변경하지 않는다.
+- 실행 결과를 확인한 뒤 완료를 보고한다.
+- 중요한 변경은 관련 MD 문서에 반영한다.</code></pre>
+          <div class="detail-caption"><span>문서는 명령이 아니라 <strong>지속되는 기준</strong>입니다.</span><span>코드가 바뀌면 문서도 갱신합니다.</span></div>
+        </div>
+      </div>
+
+      <div class="equation reveal"><span>Model</span><b>+</b><span>Context</span><b>+</b><span>Tools</span><b>+</b><span>Rules</span><b>=</b><strong>Agent System</strong></div>
+    </section>
+
+    <section class="section memory-section" id="memory" data-section="03">
+      <div class="section-heading reveal">
+        <p class="eyebrow">03 · MEMORY ARCHITECTURE</p>
+        <h2>대화가 아니라 프로젝트가 기억합니다.</h2>
+        <p>컨텍스트는 현재 작업을 위한 책상이고, MD와 Git은 다음 작업에서도 다시 꺼내 보는 서류함입니다.</p>
+      </div>
+
+      <div class="memory-grid">
+        <article class="memory-card reveal tilt-card">
+          <div class="memory-visual context-visual"><div class="context-line l1"></div><div class="context-line l2"></div><div class="context-line l3"></div><div class="context-line l4"></div><span>CONTEXT WINDOW</span></div>
+          <p class="card-label">SHORT-TERM</p><h3>단기기억</h3><p>현재 대화, 방금 읽은 파일, 오류, 작업 계획처럼 지금 필요한 정보를 들고 있습니다.</p><small>길어지면 잘리거나 요약됩니다.</small>
+        </article>
+        <article class="memory-card reveal tilt-card">
+          <div class="memory-visual compact-visual"><div class="long-block"></div><div class="compress-arrow">↓</div><div class="short-block"></div><span>COMPACTION</span></div>
+          <p class="card-label">COMPACTION</p><h3>컨텍스트 압축</h3><p>긴 작업 기록을 더 작은 요약 상태로 바꿔 같은 작업을 오래 이어가게 합니다.</p><small>세부가 빠질 수 있으므로 검증이 필요합니다.</small>
+        </article>
+        <article class="memory-card reveal tilt-card">
+          <div class="memory-visual archive-visual"><div class="archive-box"><span>MD</span><span>GIT</span><span>CODE</span></div><span>PERSISTENT MEMORY</span></div>
+          <p class="card-label">LONG-TERM</p><h3>장기기억</h3><p>프로젝트의 목적, 규칙, 결정, 기록을 파일과 Git에 남겨 새로운 대화에서도 다시 읽습니다.</p><small>문서는 지도, 실제 코드는 지형입니다.</small>
+        </article>
+      </div>
+
+      <div class="memory-line reveal" aria-label="기억 흐름"><span>작업</span><i></i><span>압축</span><i></i><span>MD 갱신</span><i></i><span>Git 저장</span><i></i><span>다음 대화</span></div>
+    </section>
+
+    <section class="section workflow-section" id="workflow" data-section="04">
+      <div class="section-heading reveal">
+        <p class="eyebrow">04 · THE DEVELOPMENT LOOP</p>
+        <h2>검토 → 계획 → 개발 → 확인 → 기억 → 저장</h2>
+        <p>한 번에 크게 만들지 않고, 작은 기능 하나를 증거와 함께 완성합니다.</p>
+      </div>
+
+      <div class="workflow-board reveal" id="final-loop">
+        <div class="workflow-track" aria-hidden="true"><span></span></div>
+        <article class="workflow-step active"><span>01</span><h3>검토</h3><p>현재 코드, 문서, 연결 상태를 먼저 읽습니다.</p></article>
+        <article class="workflow-step"><span>02</span><h3>계획</h3><p>수정 파일, 순서, 위험을 설명하게 합니다.</p></article>
+        <article class="workflow-step"><span>03</span><h3>개발</h3><p>승인한 범위만 작게 구현합니다.</p></article>
+        <article class="workflow-step"><span>04</span><h3>확인</h3><p>로컬 실행과 실제 화면으로 검증합니다.</p></article>
+        <article class="workflow-step"><span>05</span><h3>기억</h3><p>관련 MD를 에이전트가 갱신합니다.</p></article>
+        <article class="workflow-step"><span>06</span><h3>저장</h3><p>사람이 확인한 뒤 Git에 커밋합니다.</p></article>
+      </div>
+
+      <div class="prompt-lab reveal">
+        <div class="prompt-tabs" role="tablist" aria-label="프롬프트 단계">
+          <button class="prompt-tab active" type="button" role="tab" aria-selected="true" data-prompt="before">작업 전</button>
+          <button class="prompt-tab" type="button" role="tab" aria-selected="false" data-prompt="after">작업 후</button>
+          <button class="prompt-tab" type="button" role="tab" aria-selected="false" data-prompt="docs">문서 갱신</button>
+        </div>
+        <div class="prompt-window">
+          <div class="window-bar"><i></i><i></i><i></i><span>agent-prompt.txt</span><button type="button" data-copy="#prompt-code">COPY</button></div>
+          <pre id="prompt-code"><code>현재 프로젝트를 먼저 확인해주세요.
+
+아직 수정하지 말고,
+1. 수정할 파일
+2. 작업 순서
+3. 기존 기능에 생길 수 있는 위험
+
+을 먼저 설명해주세요.</code></pre>
+        </div>
+        <p class="prompt-note">좋은 프롬프트보다 <strong>반복 가능한 워크플로</strong>가 중요합니다.</p>
+      </div>
+    </section>
+
+    <section class="section stack-section" id="stack" data-section="05">
+      <div class="section-heading reveal"><p class="eyebrow">05 · WHAT WE BUILT</p><h2>우리가 연결한 전체 개발 흐름</h2><p>아이디어에서 디자인, 코드, 데이터베이스, 인증, 배포까지 하나의 프로젝트로 이어졌습니다.</p></div>
+      <div class="stack-ribbon reveal">
+        <article><span>01</span><strong>Figma / FigJam</strong><small>아이디어와 화면 구조</small></article>
+        <article><span>02</span><strong>Bolt</strong><small>초기 화면과 프로토타입</small></article>
+        <article><span>03</span><strong>Agent</strong><small>검토, 개발, 수정</small></article>
+        <article><span>04</span><strong>GitHub</strong><small>기록과 세이브 포인트</small></article>
+        <article><span>05</span><strong>Supabase</strong><small>DB, Auth, RLS</small></article>
+        <article><span>06</span><strong>Vercel</strong><small>자동 배포와 검증</small></article>
+      </div>
+      <div class="lesson-grid">
+        <article class="lesson-card reveal tilt-card"><span>DB</span><h3>SQL은 먼저 검토합니다.</h3><p>에이전트에게 전체 SQL을 만들게 하고 Supabase SQL Editor에서 직접 실행합니다.</p></article>
+        <article class="lesson-card reveal tilt-card"><span>API</span><h3>키는 코드에 쓰지 않습니다.</h3><p><code>.env.local</code>과 Vercel Environment Variables에 같은 값을 등록합니다.</p></article>
+        <article class="lesson-card reveal tilt-card"><span>AUTH</span><h3>사용자는 자기 데이터만 봅니다.</h3><p>Google 로그인, profiles 테이블, RLS를 연결해 사용자별 데이터를 분리합니다.</p></article>
+        <article class="lesson-card reveal tilt-card"><span>DEPLOY</span><h3>로컬 성공은 끝이 아닙니다.</h3><p>깨끗한 Linux 환경에서 운영 빌드가 성공하고 배포 주소가 작동해야 완료입니다.</p></article>
+      </div>
+    </section>
+
+    <section class="section evidence-section" id="evidence" data-section="06">
+      <div class="evidence-copy reveal"><p class="eyebrow">06 · READ THE AGENT</p><h2>에이전트의 생각은<br />말이 아니라 흔적으로 읽습니다.</h2><p>숨은 마음을 추측하지 않습니다. 계획, 수정 파일, 도구 실행, 테스트 결과, 실패 기록을 확인합니다.</p></div>
+      <div class="evidence-console reveal">
+        <div class="console-header"><span><i></i> AGENT TRACE</span><small>VERIFIED</small></div>
+        <div class="console-row"><span class="console-time">09:41</span><span class="console-type plan">PLAN</span><p>로그인 콜백과 환경변수 사용 위치를 먼저 확인합니다.</p></div>
+        <div class="console-row"><span class="console-time">09:43</span><span class="console-type edit">EDIT</span><p><code>app/login/page.tsx</code> 외 관련 없는 파일은 수정하지 않았습니다.</p></div>
+        <div class="console-row"><span class="console-time">09:46</span><span class="console-type test">TEST</span><p><code>npm run build</code> 성공 · 로그인 리다이렉트 확인.</p></div>
+        <div class="console-row"><span class="console-time">09:47</span><span class="console-type doc">DOC</span><p><code>WORKLOG.md</code>에 변경 이유와 확인 결과를 기록했습니다.</p></div>
+        <div class="console-footer"><strong>“완료했습니다”보다 실행 결과가 더 강한 증거입니다.</strong></div>
+      </div>
+    </section>
+
+    <section class="section voices-section" id="voices" data-section="07">
+      <div class="voices-intro reveal">
+        <div>
+          <p class="eyebrow">07 · CLASS VOICES</p>
+          <h2>배운 내용은<br />학생의 언어로 완성됩니다.</h2>
+        </div>
+        <div class="sync-card">
+          <span class="sync-light" aria-hidden="true"></span>
+          <div><strong id="voice-status">LOCAL COMMENT FEED</strong><small>네이버 카페 댓글을 로컬 파일로 동기화해 표시합니다.</small></div>
+        </div>
+      </div>
+      <div class="voice-grid" id="voice-grid" aria-live="polite">
+        <article class="voice-empty">
+          <span>COMMENTS.JSON</span>
+          <h3>아직 동기화된 댓글이 없습니다.</h3>
+          <p>로그인된 브라우저에서 지정 게시글의 댓글을 가져오면 이곳에 수업 후기와 질문이 표시됩니다.</p>
+        </article>
+      </div>
+      <p class="privacy-note reveal">댓글은 공개 API가 아니라 사용자가 직접 동기화한 로컬 데이터만 사용합니다. 공개 배포 전에는 닉네임과 개인정보를 확인하세요.</p>
+    </section>
+
+    <section class="section future-section" id="future" data-section="08">
+      <div class="future-bg" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="future-copy reveal"><p class="eyebrow">07 · THE NEXT ROLE</p><h2>미래의 개발자는<br />모든 코드를 기억하는 사람이 아닙니다.</h2><p class="future-lead">목표, 기억, 권한, 증거를 설계하고 결과에 책임지는 사람입니다.</p></div>
+      <div class="future-principles">
+        <article class="reveal"><span>01</span><h3>Goal</h3><p>무엇을 만들지 정합니다.</p></article>
+        <article class="reveal"><span>02</span><h3>Memory</h3><p>무엇을 남길지 정합니다.</p></article>
+        <article class="reveal"><span>03</span><h3>Permission</h3><p>어디까지 맡길지 정합니다.</p></article>
+        <article class="reveal"><span>04</span><h3>Evidence</h3><p>무엇으로 성공을 판단할지 정합니다.</p></article>
+      </div>
+      <div class="final-quote reveal"><p>우리가 배운 것은 AI를 사용하는 방법이 아닙니다.<br /><strong>AI와 함께 프로젝트를 완성하는 방법입니다.</strong></p></div>
+    </section>
+  </main>
+
+  <footer>
+    <div><span class="brand-mark">A</span><p><strong>AI Agent Engineering</strong><br />한국폴리텍대학 · Final Class</p></div>
+    <p>Project remembers. Human decides. Agent executes.</p>
+  </footer>
+  <div class="toast" role="status" aria-live="polite">복사했습니다.</div>
+</body>
+</html>
