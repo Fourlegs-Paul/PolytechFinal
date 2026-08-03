@@ -113,6 +113,21 @@ function setupReferenceTabs() {
   }));
 }
 
+function setupDebugFilters() {
+  const buttons = qsa("[data-debug-filter]");
+  const cases = qsa("[data-debug-category]");
+  buttons.forEach(button => button.addEventListener("click", () => {
+    const filter = button.dataset.debugFilter;
+    buttons.forEach(item => item.classList.toggle("active", item === button));
+    cases.forEach(item => {
+      const visible = filter === "all" || item.dataset.debugCategory === filter;
+      item.hidden = !visible;
+      if (!visible) item.open = false;
+    });
+    window.ScrollTrigger?.refresh();
+  }));
+}
+
 function setupCinematic() {
   const boot = qs(".boot-screen");
   if (!boot) return;
@@ -304,7 +319,7 @@ function setupMotion() {
     gsap.from(element, { clipPath: "inset(0 0 100% 0)", y: 50, duration: 1.15, ease: "power4.out", scrollTrigger: { trigger: element, start: "top 82%", once: true } });
   });
 
-  qsa(".debug-matrix article, .link-atlas a").forEach((element, index) => {
+  qsa(".debug-casebook details, .link-atlas a").forEach((element, index) => {
     gsap.from(element, { y: 45, opacity: 0, rotateY: index % 2 ? 5 : -5, duration: .7, scrollTrigger: { trigger: element, start: "top 90%", once: true } });
   });
 }
@@ -466,6 +481,7 @@ setupTabs();
 setupCopy();
 setupTilt();
 setupReferenceTabs();
+setupDebugFilters();
 setupMotion();
 setupCinematic();
 qs("#project-refresh")?.addEventListener("click", () => loadProjects({ refresh: true }));
