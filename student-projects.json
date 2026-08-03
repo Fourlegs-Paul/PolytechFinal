@@ -3,11 +3,24 @@
   "sourceUrl": "https://cafe.naver.com/f-e/cafes/31752795/menus/7",
   "menuName": "결과물 자랑하기",
   "fromDate": "2026-08-03",
-  "updatedAt": "2026-08-03T14:35:45+09:00",
+  "updatedAt": "2026-08-03T15:10:04+09:00",
   "scan": {
-    "articles": 0,
-    "projects": 0,
-    "note": "2026-08-03 00:00 이후 게시글이 아직 없습니다."
+    "articles": 1,
+    "projects": 1,
+    "note": "2026-08-03 00:00 이후 게시글 1개를 상세 확인했습니다."
   },
-  "projects": []
+  "projects": [
+    {
+      "author": "엘",
+      "title": "handa.뚝딱 어플리케이션",
+      "publishedAt": "2026-08-03T14:30:00+09:00",
+      "url": "https://handa-hp.vercel.app/",
+      "articleUrl": "https://cafe.naver.com/f-e/cafes/31752795/articles/141?menuid=7&referrerAllArticles=false",
+      "summary": "AI로 홈페이지 시안을 자동 생성하는 애플리케이션입니다. 사진을 업로드하면 더 완성도 높은 시안을 만들 수 있으며, 현재 생성량과 토큰 사용량을 고려해 운영 방식을 개선하고 있습니다.",
+      "views": 4,
+      "likes": 1,
+      "commentCount": 0,
+      "comments": []
+    }
+  ]
 }
