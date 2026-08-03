@@ -472,7 +472,7 @@ async function loadProjects({ refresh = false } = {}) {
       : `0 PROJECTS · ${articleCount} POSTS SINCE ${data.fromDate || "TODAY"}`;
     if (updated) {
       const date = data.updatedAt ? new Date(data.updatedAt) : new Date();
-      const sourceLabel = data.source === "supabase" ? "Supabase 갱신" : "로컬 백업";
+      const sourceLabel = String(data.source || "").startsWith("supabase") ? "Supabase + 배포 스냅샷" : "로컬 백업";
       updated.textContent = `${sourceLabel} ${date.toLocaleString("ko-KR")}`;
     }
   } catch {

@@ -3,6 +3,46 @@ const PROJECT_FIELDS = [
   "article_url", "summary", "views", "likes", "comment_count", "comments", "synced_at",
 ].join(",");
 
+const bundledFeed = require("../student-projects.json");
+
+function mapSupabaseRow(row) {
+  return {
+    naverArticleId: row.naver_article_id,
+    author: row.author_name,
+    title: row.title,
+    publishedAt: row.published_at,
+    url: row.project_url,
+    articleUrl: row.article_url,
+    summary: row.summary,
+    views: row.views,
+    likes: row.likes,
+    commentCount: row.comment_count,
+    comments: row.comments,
+    syncedAt: row.synced_at,
+  };
+}
+
+function mapBundledProject(project) {
+  return {
+    ...project,
+    syncedAt: bundledFeed.updatedAt,
+  };
+}
+
+function mergeProjects(databaseProjects = []) {
+  const merged = new Map();
+  databaseProjects.forEach((project) => {
+    merged.set(String(project.naverArticleId || project.url), project);
+  });
+  (bundledFeed.projects || []).forEach((project) => {
+    const mapped = mapBundledProject(project);
+    merged.set(String(mapped.naverArticleId || mapped.url), mapped);
+  });
+  return [...merged.values()].sort(
+    (a, b) => new Date(b.publishedAt || 0) - new Date(a.publishedAt || 0),
+  );
+}
+
 module.exports = async function handler(request, response) {
   if (request.method !== "GET") {
     response.setHeader("Allow", "GET");
@@ -12,7 +52,8 @@ module.exports = async function handler(request, response) {
   const supabaseUrl = process.env.SUPABASE_URL;
   const publishableKey = process.env.SUPABASE_PUBLISHABLE_KEY;
   if (!supabaseUrl || !publishableKey) {
-    return response.status(503).json({ error: "supabase_not_configured" });
+    response.setHeader("Cache-Control", "no-store, max-age=0");
+    return response.status(200).json(bundledFeed);
   }
 
   try {
@@ -27,36 +68,25 @@ module.exports = async function handler(request, response) {
     if (!supabaseResponse.ok) {
       const detail = await supabaseResponse.text();
       console.error("Supabase showcase query failed", supabaseResponse.status, detail.slice(0, 300));
-      return response.status(502).json({ error: "showcase_query_failed" });
+      response.setHeader("Cache-Control", "no-store, max-age=0");
+      return response.status(200).json(bundledFeed);
     }
 
     const rows = await supabaseResponse.json();
-    const projects = rows.map((row) => ({
-      naverArticleId: row.naver_article_id,
-      author: row.author_name,
-      title: row.title,
-      publishedAt: row.published_at,
-      url: row.project_url,
-      articleUrl: row.article_url,
-      summary: row.summary,
-      views: row.views,
-      likes: row.likes,
-      commentCount: row.comment_count,
-      comments: row.comments,
-      syncedAt: row.synced_at,
-    }));
+    const projects = mergeProjects(rows.map(mapSupabaseRow));
 
     response.setHeader("Cache-Control", "no-store, max-age=0");
     return response.status(200).json({
-      source: "supabase",
-      sourceUrl: "https://cafe.naver.com/f-e/cafes/31752795/menus/7",
-      fromDate: "2026-08-03",
-      updatedAt: projects[0]?.syncedAt || new Date().toISOString(),
-      scan: { articles: projects.length, projects: projects.length },
+      source: "supabase+build-snapshot",
+      sourceUrl: bundledFeed.sourceUrl,
+      fromDate: bundledFeed.fromDate,
+      updatedAt: bundledFeed.updatedAt || projects[0]?.syncedAt || new Date().toISOString(),
+      scan: bundledFeed.scan || { articles: projects.length, projects: projects.length },
       projects,
     });
   } catch (error) {
     console.error("Showcase API failed", error);
-    return response.status(500).json({ error: "showcase_api_failed" });
+    response.setHeader("Cache-Control", "no-store, max-age=0");
+    return response.status(200).json(bundledFeed);
   }
 };
