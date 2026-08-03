@@ -1,0 +1,20 @@
+{
+  "source": "naver-cafe-manual-sync",
+  "sourceUrl": "https://cafe.naver.com/kopoaiagent?iframe_url_utf8=%2FArticleRead.nhn%253Fclubid%3D31752795%2526articleid%3D134%2526referrerAllArticles%3Dtrue",
+  "updatedAt": "2026-08-03T12:00:00+09:00",
+  "projects": [
+    { "author": "흑광", "url": "http://p-fgsm.vercel.app" },
+    { "author": "최광호", "url": "http://restaurant-finder-app-three.vercel.app" },
+    { "author": "이든", "url": "https://myapp3-two.vercel.app/" },
+    { "author": "파워맨임다", "url": "https://ybkwon68-web-dashboard-six.vercel.app/" },
+    { "author": "감자바위", "url": "https://ohaeng-tetris-v2.vercel.app" },
+    { "author": "부시시", "url": "http://hanul-nu.vercel.app" },
+    { "author": "꼬미", "url": "https://myapp-7jsk.vercel.app/" },
+    { "author": "엘", "url": "https://handa-hp.vercel.app/" },
+    { "author": "도파", "url": "https://ai-pm-finder.vercel.app/" },
+    { "author": "사구찬", "url": "https://voicetutor-sand.vercel.app/" },
+    { "author": "앨리스", "url": "https://poly-app-git-main-allice.vercel.app/" },
+    { "author": "감자바위", "url": "http://my-2d-gallery.vercel.app" },
+    { "author": "미시즈도치", "url": "http://style-app-git-main-docho.vercel.app" }
+  ]
+}

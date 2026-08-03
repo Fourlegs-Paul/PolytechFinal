@@ -224,47 +224,77 @@ function setupMotion() {
   });
 }
 
-function createVoiceCard(comment) {
+function projectPreviewUrl(url, nonce = Date.now()) {
+  const secureUrl = url.replace(/^http:\/\//, "https://");
+  const separator = secureUrl.includes("?") ? "&" : "?";
+  const refreshableUrl = `${secureUrl}${separator}gallery_refresh=${nonce}`;
+  return `https://image.thum.io/get/width/900/crop/560/noanimate/${refreshableUrl}`;
+}
+
+function createProjectCard(project, nonce) {
   const article = document.createElement("article");
-  article.className = "voice-card";
+  article.className = "project-card";
+  const previewLink = document.createElement("a");
+  previewLink.className = "project-preview";
+  previewLink.href = project.url;
+  previewLink.target = "_blank";
+  previewLink.rel = "noopener noreferrer";
+  const image = document.createElement("img");
+  image.src = projectPreviewUrl(project.url, nonce);
+  image.alt = `${project.author || "학생"} 프로젝트 대표 화면`;
+  image.loading = "lazy";
+  image.referrerPolicy = "no-referrer";
+  image.addEventListener("error", () => article.classList.add("preview-error"), { once: true });
+  const previewLabel = document.createElement("span");
+  previewLabel.textContent = "LIVE PREVIEW";
+  previewLink.append(image, previewLabel);
   const meta = document.createElement("div");
-  meta.className = "voice-meta";
+  meta.className = "project-meta";
   const avatar = document.createElement("span");
-  avatar.className = "voice-avatar";
-  avatar.textContent = (comment.author || "익명").trim().slice(0, 1).toUpperCase();
+  avatar.className = "project-avatar";
+  avatar.textContent = (project.author || "학생").trim().slice(0, 1).toUpperCase();
   const identity = document.createElement("div");
   const author = document.createElement("strong");
-  author.textContent = comment.author || "익명";
-  const date = document.createElement("small");
-  date.textContent = comment.date || "동기화된 댓글";
-  identity.append(author, date);
+  author.textContent = project.author || "학생";
+  const address = document.createElement("small");
+  address.textContent = project.url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+  identity.append(author, address);
   meta.append(avatar, identity);
-  const quote = document.createElement("blockquote");
-  quote.textContent = comment.text || "";
-  article.append(meta, quote);
-  if (comment.url) {
-    const link = document.createElement("a");
-    link.href = comment.url;
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
-    link.textContent = "원문 보기 ↗";
-    article.append(link);
-  }
+  const link = document.createElement("a");
+  link.className = "project-open";
+  link.href = project.url;
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+  link.textContent = "작품 열기 ↗";
+  article.append(previewLink, meta, link);
   return article;
 }
 
-async function loadVoices() {
-  const grid = qs("#voice-grid");
-  const status = qs("#voice-status");
+async function loadProjects({ refresh = false } = {}) {
+  const grid = qs("#project-grid");
+  const status = qs("#project-status");
+  const updated = qs("#project-updated");
+  const button = qs("#project-refresh");
+  if (!grid || !status) return;
+  if (button) button.disabled = true;
+  status.textContent = refresh ? "REFRESHING PROJECT FEED" : "LOADING PROJECT FEED";
   try {
-    const response = await fetch("./comments.json", { cache: "no-store" });
-    if (!response.ok) throw new Error("comment feed unavailable");
+    const response = await fetch(`./student-projects.json?t=${Date.now()}`, { cache: "no-store" });
+    if (!response.ok) throw new Error("project feed unavailable");
     const data = await response.json();
-    if (!Array.isArray(data.comments) || data.comments.length === 0) return;
-    grid.replaceChildren(...data.comments.slice(0, 12).map(createVoiceCard));
-    status.textContent = `${data.comments.length} COMMENTS SYNCED`;
+    if (!Array.isArray(data.projects) || data.projects.length === 0) throw new Error("project feed empty");
+    const nonce = Date.now();
+    grid.replaceChildren(...data.projects.map(project => createProjectCard(project, nonce)));
+    status.textContent = `${data.projects.length} PROJECT LINKS SYNCED`;
+    if (updated) {
+      const date = data.updatedAt ? new Date(data.updatedAt) : new Date();
+      updated.textContent = `피드 기준 ${date.toLocaleString("ko-KR")}`;
+    }
   } catch {
-    status.textContent = "LOCAL COMMENT FEED";
+    status.textContent = "PROJECT FEED UNAVAILABLE";
+    if (updated) updated.textContent = "student-projects.json을 확인하세요";
+  } finally {
+    if (button) button.disabled = false;
   }
 }
 
@@ -274,4 +304,5 @@ setupTabs();
 setupCopy();
 setupTilt();
 setupMotion();
-loadVoices();
+qs("#project-refresh")?.addEventListener("click", () => loadProjects({ refresh: true }));
+loadProjects();
