@@ -337,26 +337,26 @@
         </div>
         <div class="sync-card">
           <span class="sync-light" aria-hidden="true"></span>
-          <div><strong id="project-status">PROJECT FEED READY</strong><small>결과물 자랑하기 게시판의 Vercel 작품만 동기화합니다.</small></div>
+          <div><strong id="project-status">SUPABASE FEED READY</strong><small>승인된 학생 작품을 Supabase에서 매번 새로 읽습니다.</small></div>
         </div>
       </div>
       <div class="gallery-toolbar reveal">
         <div>
-          <button class="gallery-refresh" id="project-refresh" type="button"><span aria-hidden="true">↻</span> 최신 피드 다시 읽기</button>
+          <button class="gallery-refresh" id="project-refresh" type="button"><span aria-hidden="true">↻</span> Supabase 최신 목록 불러오기</button>
           <a class="gallery-source" href="https://cafe.naver.com/f-e/cafes/31752795/menus/7" target="_blank" rel="noreferrer">결과물 게시판 열기 ↗</a>
         </div>
         <small id="project-updated">마지막 동기화 확인 중</small>
       </div>
       <div class="voice-grid project-grid" id="project-grid" aria-live="polite">
         <article class="voice-empty">
-          <span>STUDENT-PROJECTS.JSON</span>
+          <span>SUPABASE PROJECT FEED</span>
           <h3>프로젝트 링크를 불러오고 있습니다.</h3>
           <p>2026년 8월 3일 이후 게시글과 공개 Vercel 주소를 확인합니다.</p>
         </article>
       </div>
       <details class="sync-guide reveal">
         <summary>새 게시글을 갤러리에 반영하는 기준</summary>
-        <div><strong>네이버에 로그인한 브라우저에서 결과물 게시판을 열고 “게시판 동기화”를 요청하세요.</strong><p>2026년 8월 3일 00:00 이후 작성된 모든 글을 읽고, 본문의 <code>*.vercel.app</code> 주소만 작품으로 등록합니다. 작성자·글 제목·작성일·조회·좋아요·댓글 수와 공개된 댓글 일부를 함께 기록합니다. 이 웹앱의 버튼은 배포된 최신 피드와 작품 스크린샷을 다시 읽습니다.</p></div>
+        <div><strong>작품 데이터는 별도 Supabase 테이블에 저장되고, 버튼은 그 최신 데이터를 즉시 다시 조회합니다.</strong><p>2026년 8월 3일 00:00 이후 작성된 글 가운데 본문에 <code>*.vercel.app</code> 주소가 있는 작품만 등록합니다. 작성자·글 제목·작성일·조회·좋아요·댓글 수와 공개 댓글 일부를 함께 저장합니다. 단, 일반 웹페이지는 브라우저의 네이버 로그인 쿠키를 읽을 수 없으므로 네이버 글 수집은 운영자 동기화나 전용 브라우저 확장이 담당하고, 이 버튼은 저장이 끝난 Supabase 목록을 새로 불러옵니다.</p></div>
       </details>
       <p class="privacy-note reveal">네이버 로그인 쿠키·회원 프로필 주소는 저장하지 않습니다. 게시글에서 갤러리에 필요한 공개 정보와 Vercel 주소만 사용합니다.</p>
     </section>

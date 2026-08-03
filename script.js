@@ -452,9 +452,16 @@ async function loadProjects({ refresh = false } = {}) {
   if (button) button.disabled = true;
   status.textContent = refresh ? "REFRESHING PROJECT FEED" : "LOADING PROJECT FEED";
   try {
-    const response = await fetch(`./student-projects.json?t=${Date.now()}`, { cache: "no-store" });
-    if (!response.ok) throw new Error("project feed unavailable");
-    const data = await response.json();
+    let response = await fetch(`/api/projects?t=${Date.now()}`, { cache: "no-store" });
+    let data;
+    if (response.ok) {
+      data = await response.json();
+    } else {
+      response = await fetch(`./student-projects.json?t=${Date.now()}`, { cache: "no-store" });
+      if (!response.ok) throw new Error("project feed unavailable");
+      data = await response.json();
+      data.source = "local-fallback";
+    }
     if (!Array.isArray(data.projects)) throw new Error("project feed invalid");
     const projects = data.projects.filter(isVercelProject);
     const nonce = Date.now();
@@ -465,11 +472,12 @@ async function loadProjects({ refresh = false } = {}) {
       : `0 PROJECTS · ${articleCount} POSTS SINCE ${data.fromDate || "TODAY"}`;
     if (updated) {
       const date = data.updatedAt ? new Date(data.updatedAt) : new Date();
-      updated.textContent = `게시판 동기화 ${date.toLocaleString("ko-KR")}`;
+      const sourceLabel = data.source === "supabase" ? "Supabase 갱신" : "로컬 백업";
+      updated.textContent = `${sourceLabel} ${date.toLocaleString("ko-KR")}`;
     }
   } catch {
     status.textContent = "PROJECT FEED UNAVAILABLE";
-    if (updated) updated.textContent = "student-projects.json을 확인하세요";
+    if (updated) updated.textContent = "Supabase 연결과 로컬 백업을 확인하세요";
   } finally {
     if (button) button.disabled = false;
   }
