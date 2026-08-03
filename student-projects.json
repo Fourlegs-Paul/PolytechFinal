@@ -3,11 +3,11 @@
   "sourceUrl": "https://cafe.naver.com/f-e/cafes/31752795/menus/7",
   "menuName": "결과물 자랑하기",
   "fromDate": "2026-08-03",
-  "updatedAt": "2026-08-03T18:33:27+09:00",
+  "updatedAt": "2026-08-03T19:36:53+09:00",
   "scan": {
     "articles": 13,
     "projects": 12,
-    "note": "2026-08-03 게시글 141~154번 중 게시판에 존재하는 13개 글을 상세 확인했습니다. 153번은 Vercel 주소가 없어 현재 전시 규칙에서 제외했습니다."
+    "note": "제목·본문 텍스트·본문 링크 href를 모두 검사했습니다. 2026-08-03 게시글 141~154번 중 게시판에 존재하는 13개 글을 확인했고, 제목에만 Vercel 주소가 있는 142번도 포함했습니다. 153번은 Vercel 주소가 없어 제외했습니다."
   },
   "projects": [
     {
@@ -18,8 +18,8 @@
       "url": "https://myapp-7jsk.vercel.app/",
       "articleUrl": "https://cafe.naver.com/f-e/cafes/31752795/articles/154?menuid=7&referrerAllArticles=false",
       "summary": "반려견의 홈케어 일정을 관리하고 AI 상담과 마이페이지를 한곳에서 이용하는 멍케어 서비스입니다.",
-      "views": 1,
-      "likes": 0,
+      "views": 5,
+      "likes": 2,
       "commentCount": 0,
       "comments": []
     },
@@ -31,8 +31,8 @@
       "url": "https://mj-myapp-new-zeta.vercel.app/login",
       "articleUrl": "https://cafe.naver.com/f-e/cafes/31752795/articles/152?menuid=7&referrerAllArticles=false",
       "summary": "맨발걷기 활동을 기록하고 즐겨찾은 장소와 기록을 다시 찾아볼 수 있도록 구성한 건강관리 서비스입니다.",
-      "views": 9,
-      "likes": 5,
+      "views": 10,
+      "likes": 6,
       "commentCount": 4,
       "comments": [
         { "author": "앨리스", "text": "멋진 앱 만드셨네요.!!" },
@@ -47,7 +47,7 @@
       "url": "https://myapp-eta-liard.vercel.app/",
       "articleUrl": "https://cafe.naver.com/f-e/cafes/31752795/articles/151?menuid=7&referrerAllArticles=false",
       "summary": "자전거 GPX 경로를 올리면 이동 경로 주변의 Google 평점 4.5 이상 맛집을 찾아주는 라이더용 지도 서비스입니다.",
-      "views": 7,
+      "views": 9,
       "likes": 5,
       "commentCount": 2,
       "comments": [
@@ -63,8 +63,8 @@
       "url": "https://jangmasil.vercel.app/",
       "articleUrl": "https://cafe.naver.com/f-e/cafes/31752795/articles/150?menuid=7&referrerAllArticles=false",
       "summary": "오늘 열리는 전국 5일장과 주변 상설시장을 지역·시장명으로 찾아보는 전통시장 여행 서비스입니다.",
-      "views": 9,
-      "likes": 6,
+      "views": 10,
+      "likes": 7,
       "commentCount": 2,
       "comments": [
         { "author": "앨리스", "text": "너무 예쁘게 만드셨네요. 내용도 풍부하고. 고생많으셨어요.^^" },
@@ -79,8 +79,8 @@
       "url": "https://style-app-git-main-docho.vercel.app/",
       "articleUrl": "https://cafe.naver.com/f-e/cafes/31752795/articles/149?menuid=7&referrerAllArticles=false",
       "summary": "전신사진을 올리면 상황과 목적에 맞는 스타일을 추천하는 중장년 맞춤 패션 도우미입니다.",
-      "views": 7,
-      "likes": 4,
+      "views": 9,
+      "likes": 5,
       "commentCount": 2,
       "comments": [
         { "author": "헤라1", "text": "저에게 꼭 필요한 앱이네요. 승승장구하세요. 도치님" },
@@ -95,7 +95,7 @@
       "url": "https://voicetutorv2.vercel.app/",
       "articleUrl": "https://cafe.naver.com/f-e/cafes/31752795/articles/147?menuid=7&referrerAllArticles=false",
       "summary": "학습자료나 비즈니스 문서를 올리면 실시간으로 발음을 교정해 주는 모바일 음성 튜터입니다.",
-      "views": 17,
+      "views": 18,
       "likes": 7,
       "commentCount": 2,
       "comments": [
@@ -111,8 +111,8 @@
       "url": "https://foodtrip-six.vercel.app/",
       "articleUrl": "https://cafe.naver.com/f-e/cafes/31752795/articles/146?menuid=7&referrerAllArticles=false",
       "summary": "백반기행에 소개된 맛집과 여행 동선을 지도에서 탐색할 수 있도록 정리한 음식 여행 웹앱입니다.",
-      "views": 15,
-      "likes": 6,
+      "views": 17,
+      "likes": 7,
       "commentCount": 4,
       "comments": [
         { "author": "앨리스", "text": "맛집 다닐때 잘 활용할 수 있을 것 같아요.^^" },
@@ -127,8 +127,8 @@
       "url": "https://p-fgsm.vercel.app/",
       "articleUrl": "https://cafe.naver.com/f-e/cafes/31752795/articles/145?menuid=7&referrerAllArticles=false",
       "summary": "주식 보유 현황과 자산 정보를 한눈에 확인하고 관리하는 투자 대시보드형 웹앱입니다.",
-      "views": 15,
-      "likes": 5,
+      "views": 17,
+      "likes": 6,
       "commentCount": 4,
       "comments": [
         { "author": "헤라1", "text": "로그인을 못했지만 대박 나세요" },
@@ -143,8 +143,8 @@
       "url": "https://poly-app-kappa.vercel.app/",
       "articleUrl": "https://cafe.naver.com/f-e/cafes/31752795/articles/144?menuid=7&referrerAllArticles=false",
       "summary": "냉장고 재료와 유통기한을 관리하고 보유 식재료에 맞는 레시피를 추천하는 AI 냉장고 매니저입니다.",
-      "views": 10,
-      "likes": 6,
+      "views": 12,
+      "likes": 7,
       "commentCount": 2,
       "comments": [
         { "author": "헤라1", "text": "로그인을 못해 보지 못했지만 정말 유용할 겁니다" },
@@ -159,8 +159,8 @@
       "url": "https://silver-step-lecture.vercel.app/",
       "articleUrl": "https://cafe.naver.com/f-e/cafes/31752795/articles/143?menuid=7&referrerAllArticles=false",
       "summary": "시니어 사용자가 안전하게 따라 할 수 있도록 구성한 AI 홈트레이닝 서비스입니다.",
-      "views": 12,
-      "likes": 6,
+      "views": 14,
+      "likes": 7,
       "commentCount": 4,
       "comments": [
         { "author": "헤라1", "text": "고령사회에 유망한 아이템입니다. 수고 많으셨습니다." },
@@ -171,11 +171,13 @@
       "naverArticleId": 142,
       "author": "스마일",
       "title": "칼로리 계산기",
+      "sourceTitle": "칼로리 계산기 https://calorie-calculator-new.vercel.app/",
+      "urlSource": "title",
       "publishedAt": "2026-08-03T15:22:00+09:00",
       "url": "https://calorie-calculator-new.vercel.app/",
       "articleUrl": "https://cafe.naver.com/f-e/cafes/31752795/articles/142?menuid=7&referrerAllArticles=false",
       "summary": "음식과 섭취량을 입력하면 예상 칼로리를 계산하고 기록할 수 있는 식단 관리 도구입니다.",
-      "views": 14,
+      "views": 15,
       "likes": 6,
       "commentCount": 3,
       "comments": [
@@ -191,7 +193,7 @@
       "url": "https://handa-hp.vercel.app/",
       "articleUrl": "https://cafe.naver.com/f-e/cafes/31752795/articles/141?menuid=7&referrerAllArticles=false",
       "summary": "AI로 홈페이지 제안서를 자동 생성하는 애플리케이션입니다. 사진을 올리면 제안서 제작 과정을 빠르게 진행할 수 있습니다.",
-      "views": 19,
+      "views": 21,
       "likes": 9,
       "commentCount": 1,
       "comments": [

@@ -12,7 +12,9 @@
 - 작성자 닉네임, 글 제목, 작성일, 조회수
 - 좋아요 수, 댓글 수
 - 본문에서 파악한 프로젝트 설명 한두 문장
-- 본문 링크 중 hostname이 `vercel.app` 또는 `*.vercel.app`인 주소
+- 글 제목의 텍스트, 본문 텍스트, 본문 링크의 표시 문자열과 실제 `href`를 모두 검사합니다.
+- 위 위치에서 찾은 URL 중 hostname이 `vercel.app` 또는 `*.vercel.app`인 주소를 작품 URL로 인정합니다.
+- 제목에만 Vercel 주소가 있는 글도 반드시 포함합니다. 예: `칼로리 계산기 https://calorie-calculator-new.vercel.app/`
 - 공개 댓글은 최신 두 개까지 작성자와 본문을 기록
 - 같은 글에 Vercel 주소가 여러 개면 작품별로 별도 항목을 만듭니다.
 
@@ -26,7 +28,7 @@
 ## 반영 순서
 
 1. 로그인된 브라우저에서 게시판 목록을 읽습니다.
-2. 대상 글을 열어 본문·Vercel 주소·좋아요·댓글을 확인합니다.
+2. 목록의 글 제목에서 Vercel 주소를 먼저 찾고, 대상 글을 열어 본문 텍스트·링크 `href`·좋아요·댓글을 확인합니다.
 3. `student-projects.json`의 `updatedAt`, `scan`, `projects`를 갱신합니다.
 4. `node --check script.js`와 JSON 파싱을 확인합니다.
 5. GitHub `main`에 push해 Vercel 자동 배포를 기다립니다.

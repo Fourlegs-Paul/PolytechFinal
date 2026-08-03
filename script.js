@@ -331,13 +331,33 @@ function projectPreviewUrl(url, nonce = Date.now()) {
   return `https://image.thum.io/get/width/900/crop/560/noanimate/${refreshableUrl}`;
 }
 
-function isVercelProject(project) {
-  try {
-    const hostname = new URL(project.url).hostname.toLowerCase();
-    return hostname === "vercel.app" || hostname.endsWith(".vercel.app");
-  } catch {
-    return false;
+function findVercelProjectUrl(project) {
+  const sources = [project?.url, project?.sourceTitle, project?.title, project?.summary];
+  for (const source of sources) {
+    if (typeof source !== "string") continue;
+    const candidates = source.match(/https?:\/\/[^\s<>"']+/gi) || [];
+    if (/^https?:\/\//i.test(source.trim())) candidates.unshift(source.trim());
+    for (const candidate of candidates) {
+      try {
+        const cleaned = candidate.replace(/[),.;!?]+$/, "");
+        const parsed = new URL(cleaned);
+        const hostname = parsed.hostname.toLowerCase();
+        if (hostname === "vercel.app" || hostname.endsWith(".vercel.app")) {
+          return parsed.toString();
+        }
+      } catch {
+        // 다음 제목·본문 후보를 계속 확인합니다.
+      }
+    }
   }
+  return "";
+}
+
+function isVercelProject(project) {
+  const detectedUrl = findVercelProjectUrl(project);
+  if (!detectedUrl) return false;
+  project.url = detectedUrl;
+  return true;
 }
 
 function createProjectCard(project, nonce) {
