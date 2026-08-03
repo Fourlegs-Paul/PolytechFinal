@@ -23,7 +23,7 @@ node server.js --open
 
 ## 서비스 연결 가이드
 
-`guide.html`은 API 요청을 이해하고 Postman으로 검증하는 단계부터 Agentria와 플랫폼 API, GitHub 참고 저장소, Vercel, Supabase, Google Cloud Console, 환경변수와 최종 검증까지 설명하는 별도 메뉴입니다.
+`guide.html`은 “오늘뭐먹지”라는 하나의 현실적인 앱을 예제로 사용합니다. Google 로그인 → 네이버에서 “성수동 파스타” 검색 → Supabase 즐겨찾기 저장 → GitHub push → Vercel 배포를 따라가며 API, Postman, Agentria와 플랫폼 설정을 설명합니다.
 
 - 메인 상단 메뉴의 `Guide`에서 이동
 - Next.js/Vite 환경변수 예시 전환 및 복사

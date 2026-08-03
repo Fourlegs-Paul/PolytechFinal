@@ -1,75 +1,79 @@
 const fileData = {
   agents: { path: "/project/AGENTS.md", status: "READ FIRST", content: `# 에이전트 작업 규칙
 
-- 수정 전 현재 프로젝트를 먼저 확인한다.
-- 아직 수정하지 말고 계획부터 설명한다.
-- 관련 없는 파일은 변경하지 않는다.
-- 실행 결과를 확인한 뒤 완료를 보고한다.
-- 중요한 변경은 관련 MD 문서에 반영한다.` },
+- 목표: Google 로그인 사용자가 맛집을 검색하고 저장한다.
+- 검색 Secret은 서버 Route에서만 사용한다.
+- favorites는 auth.uid()와 user_id가 같은 행만 다룬다.
+- 수정 전 관련 Route·테이블·환경변수를 먼저 확인한다.
+- 검색 → 저장 → 새로고침을 실제로 시험한 뒤 보고한다.` },
   project: { path: "/project/PROJECT_BRIEF.md", status: "PROJECT NORTH STAR", content: `# 프로젝트 목적
 
-- 해결하려는 문제:
-- 주요 사용자:
-- 반드시 제공할 핵심 기능:
-- 이번 버전에서 하지 않을 것:
-- 성공했다고 판단할 기준:
+- 이름: 오늘뭐먹지
+- 사용자: 점심 장소를 빠르게 고르고 싶은 학생
+- 문제: 검색 결과를 매번 다시 찾아야 한다.
+- 핵심 기능: Google 로그인, 지역 검색, 내 즐겨찾기
+- 이번 버전 제외: 리뷰 작성, 결제, 실시간 예약
+- 성공 기준: 성수동 파스타 3건 조회 후 1건 저장
 
 프로젝트의 방향이 흔들릴 때 이 문서를 다시 확인한다.` },
   ui: { path: "/project/UI_REFERENCE.md", status: "DESIGN MEMORY", content: `# 디자인 기준
 
-- references 폴더의 이미지를 먼저 확인한다.
-- 모든 화면은 같은 타이포그래피 체계를 사용한다.
-- 색상은 제한적으로 사용한다.
-- 카드, 버튼, 모달의 모양을 통일한다.
-- 움직임은 내용을 설명할 때만 사용한다.
-- 모바일 화면과 모션 감소 설정을 확인한다.` },
-  api: { path: "/project/API_CONTRACT.md", status: "INTEGRATION RULES", content: `# 외부 API 규칙
+- 검색창 placeholder: "지역과 메뉴를 입력하세요"
+- 첫 검색 예시: "성수동 파스타"
+- 결과 카드는 식당명·분류·주소·저장 버튼 순서
+- 저장된 카드는 별 아이콘과 "저장됨" 상태 표시
+- 401은 "API 연결을 확인해주세요"로 안내
+- 모바일 1열과 키보드 포커스를 반드시 확인한다.` },
+  api: { path: "/project/API_CONTRACT.md", status: "INTEGRATION RULES", content: `# 네이버 지역 검색 계약
 
-- 키를 코드에 직접 작성하지 않는다.
-- 로컬과 배포 환경의 비밀값을 분리한다.
-- 요청과 응답 데이터 형식을 먼저 정리한다.
-- 서버와 브라우저에서 사용할 키를 구분한다.
-- 실패, 재시도, 제한 정책을 기록한다.` },
+- GET /v1/search/local.json
+- query: 성수동 파스타
+- display: 3
+- headers: X-Naver-Client-Id / Client-Secret
+- success: 200 + items[].title/category/roadAddress
+- errors: 401 키 확인, 429 호출 한도 확인
+- Secret은 /api/search 서버 Route에서만 읽는다.` },
   worklog: { path: "/project/WORKLOG.md", status: "HANDOFF MEMORY", content: `# 작업 기록
 
 ## 완료한 기능
-- 데이터 흐름 연결
-- 사용자별 접근 규칙 검토
-- 외부 서비스 연동
-- 운영 환경 검증
+- Google 로그인 후 /search로 복귀
+- "성수동 파스타" 검색 결과 3건 표시
+- favorites 저장·삭제와 사용자별 RLS 검증
+- main push 후 Vercel 운영 배포 확인
 
 ## 다음 작업
-- 실제 사용자 테스트
-- 오류와 개선점 기록
-- 관련 문서 갱신
+- 모바일에서 식당 카드 간격 확인
+- 네이버 401·429 오류 문구 개선
+- 지도 마커 확장 기능 검토
 
 작업 기록은 다음 에이전트에게 전달하는 인수인계서다.` }
 };
 
 const prompts = {
-  before: `현재 프로젝트를 먼저 확인해주세요.
+  before: `오늘뭐먹지 프로젝트에서 "검색 결과를 즐겨찾기에 저장" 기능을 만들려고 합니다.
 
 아직 수정하지 말고,
-1. 수정할 파일
-2. 작업 순서
-3. 기존 기능에 생길 수 있는 위험
+1. 현재 검색 API Route와 favorites 테이블 구조
+2. 수정할 파일과 작업 순서
+3. user_id 누락·RLS 충돌·Secret 노출 위험
 
-을 먼저 설명해주세요.`,
-  after: `개발 결과를 실제 기준으로 보고해주세요.
+을 먼저 확인해 보고해주세요.`,
+  after: `오늘뭐먹지의 즐겨찾기 기능을 실제 사용자 흐름으로 검증해주세요.
 
-1. 수정한 파일
-2. 실행 또는 빌드 결과
-3. 해결하지 못한 문제
-4. 확인이 필요한 부분
+1. Google 로그인
+2. "성수동 파스타" 검색 3건
+3. 1건 저장 후 새로고침
+4. 다른 계정에서는 해당 저장 항목이 보이지 않는지
 
-추측하지 말고 확인한 사실만 작성해주세요.`,
-  docs: `현재 기능 개발이 정상적으로 완료됐습니다.
+확인한 화면·상태 코드·DB 결과만 보고해주세요.`,
+  docs: `즐겨찾기 기능의 실제 변경 내용을 기준으로 문서를 갱신해주세요.
 
-실제 변경 내용을 기준으로
-수정이 필요한 MD 파일만 갱신해주세요.
+API_CONTRACT.md에는 요청·응답과 401/429를,
+DATA_MODEL.md에는 favorites 열과 RLS를,
+WORKLOG.md에는 테스트 결과를 기록해주세요.
 
-추측해서 작성하지 말고,
-변경한 문서와 핵심 내용을 마지막에 보고해주세요.`
+수정하지 않아도 되는 문서는 건드리지 말고
+변경한 문서와 근거를 마지막에 보고해주세요.`
 };
 
 const qs = (selector, parent = document) => parent.querySelector(selector);
