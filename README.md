@@ -1,6 +1,8 @@
 # PolytechFinal
 
-한국폴리텍대학 AI Agent Engineering 수업의 최종 요약 웹페이지입니다.
+한국폴리텍대학 AI Agent Engineering 수업의 최종 요약이자, 수업 후에도 계속 사용하는 종합 실전 지침서입니다.
+
+메인 페이지는 에이전트 개념, MD 하네스, 프로젝트 기억, 개발 루프, 전체 커리큘럼, 프롬프트 키트, 장애 진단표, 공식 문서 아틀라스와 학생 결과물을 연결합니다. `guide.html`은 API·Postman·Agentria·GitHub·Supabase·Google Cloud·Vercel을 실제 설정 순서대로 안내합니다.
 
 ## 프로젝트 루트
 
@@ -21,7 +23,7 @@ node server.js --open
 
 ## 서비스 연결 가이드
 
-`guide.html`은 Vercel, Supabase, Google Cloud Console을 처음 로그인하는 단계부터 프로젝트 생성, 환경변수 배치, Google OAuth 연결, 최종 검증까지 설명하는 별도 메뉴입니다.
+`guide.html`은 API 요청을 이해하고 Postman으로 검증하는 단계부터 Agentria와 플랫폼 API, GitHub 참고 저장소, Vercel, Supabase, Google Cloud Console, 환경변수와 최종 검증까지 설명하는 별도 메뉴입니다.
 
 - 메인 상단 메뉴의 `Guide`에서 이동
 - Next.js/Vite 환경변수 예시 전환 및 복사

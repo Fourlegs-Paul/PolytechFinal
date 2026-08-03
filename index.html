@@ -13,9 +13,11 @@
   <script defer src="./script.js?v=20260803"></script>
 </head>
 <body>
+  <div class="boot-screen" aria-hidden="true"><div class="boot-mark">A</div><p>INITIALIZING AGENT SYSTEM</p><div class="boot-track"><span></span></div><b>00</b></div>
   <div class="noise" aria-hidden="true"></div>
   <div class="cursor-glow" aria-hidden="true"></div>
   <div class="scroll-progress" aria-hidden="true"><span></span></div>
+  <div class="page-hud" aria-hidden="true"><span>POLYTECH · FINAL ARCHIVE</span><b data-hud-section>00 / START</b></div>
 
   <header class="topbar">
     <a class="brand" href="#hero" aria-label="맨 위로 이동">
@@ -23,16 +25,13 @@
       <span>Agent Engineering</span>
     </a>
     <nav class="nav" aria-label="주요 섹션">
-      <a href="#difference">차이</a>
-      <a href="#harness">하네스</a>
-      <a href="#memory">기억</a>
-      <a href="#workflow">워크플로</a>
-      <a href="#stack">도구</a>
-      <a href="#curriculum">수업 원문</a>
-      <a href="#evidence">검증</a>
-      <a href="#voices">학생 프로젝트</a>
-      <a href="#future">미래</a>
-      <a class="nav-guide" href="./guide.html">Guide ↗</a>
+      <a href="#command-center">시작</a>
+      <a href="#difference">에이전트</a>
+      <a href="#workflow">핵심 루프</a>
+      <a href="#curriculum">커리큘럼</a>
+      <a href="#reference">실전 레퍼런스</a>
+      <a href="#voices">학생 작품</a>
+      <a class="nav-guide" href="./guide.html">실습 가이드 ↗</a>
     </nav>
   </header>
 
@@ -40,18 +39,20 @@
     <section class="hero section" id="hero" data-section="00">
       <div class="hero-copy reveal">
         <p class="eyebrow">KOREA POLYTECHNICS · AI AGENT ENGINEERING</p>
+        <div class="hero-edition"><span>2026</span><i></i><b>COMPLETE FIELD MANUAL</b></div>
         <h1>
-          대화에서 끝나지 않고<br />
-          <span class="gradient-text">프로젝트를 완성하는 법</span>
+          AI에게 묻는 사람에서<br />
+          <span class="gradient-text">AI와 완성하는 사람으로.</span>
         </h1>
         <p class="hero-lead">
-          한 학기 동안 배운 에이전트, 프로젝트 기억, 개발 루프와 배포까지.
-          사람이 목표를 정하고 AI와 함께 결과를 검증하는 과정을 한 페이지에 담았습니다.
+          API의 언어, Postman 검증, Agentria, GitHub, 프로젝트 기억, Supabase와 Vercel 배포까지.
+          수업이 끝난 뒤에도 다시 꺼내 쓰는 AI 에이전트 실전 운영 지침서입니다.
         </p>
         <div class="hero-actions">
-          <a class="button primary" href="#difference">핵심 흐름 탐색</a>
-          <button class="button ghost" type="button" data-copy="#final-loop">핵심 루프 복사</button>
+          <a class="button primary magnetic" href="#command-center">10분 만에 다시 시작</a>
+          <a class="button ghost magnetic" href="./guide.html">실습 가이드 열기 ↗</a>
         </div>
+        <div class="hero-metrics" aria-label="가이드 구성"><span><b data-count="9">0</b><small>LEARNING SYSTEMS</small></span><span><b data-count="25">0</b><small>FIELD CHECKS</small></span><span><b data-count="20">0</b><small>OFFICIAL LINKS+</small></span></div>
         <div class="hero-status" aria-label="핵심 개념">
           <span><i></i> Agent</span>
           <span><i></i> Markdown</span>
@@ -88,7 +89,20 @@
         <div class="signal signal-two" aria-hidden="true"></div>
       </div>
 
-      <div class="scroll-cue" aria-hidden="true"><span>SCROLL</span><i></i></div>
+      <div class="scroll-cue" aria-hidden="true"><span>SCROLL TO OPERATE</span><i></i></div>
+      <div class="hero-ticker" aria-hidden="true"><div>API CONTRACT · POSTMAN · AGENTRIA · GITHUB · FIGMA · BOLT · MARKDOWN HARNESS · SUPABASE · GOOGLE OAUTH · VERCEL · EVIDENCE · ITERATION ·&nbsp;</div><div>API CONTRACT · POSTMAN · AGENTRIA · GITHUB · FIGMA · BOLT · MARKDOWN HARNESS · SUPABASE · GOOGLE OAUTH · VERCEL · EVIDENCE · ITERATION ·&nbsp;</div></div>
+    </section>
+
+    <section class="section command-section" id="command-center" data-section="01">
+      <div class="command-intro reveal"><p class="eyebrow">00 · MISSION CONTROL</p><h2>지금 막막하다면<br />여기서 다시 시작하세요.</h2><p>현재 상황과 가장 가까운 입구를 선택하면 필요한 개념, 실습, 체크리스트로 바로 이동합니다.</p></div>
+      <div class="command-grid">
+        <a class="command-card reveal" href="#difference"><span>01</span><small>I'M NEW</small><h3>AI 에이전트가 처음이에요</h3><p>대화형 AI와 에이전트의 차이부터 시작합니다.</p><b>개념 잡기 ↘</b></a>
+        <a class="command-card reveal" href="./guide.html#api"><span>02</span><small>CONNECT API</small><h3>외부 데이터를 붙이고 싶어요</h3><p>API 구조를 읽고 Postman으로 먼저 검증합니다.</p><b>API 실습 ↗</b></a>
+        <a class="command-card reveal" href="#harness"><span>03</span><small>CONTROL AGENT</small><h3>에이전트가 자꾸 헤매요</h3><p>MD 하네스와 작업 규칙으로 맥락을 고정합니다.</p><b>기억 설계 ↘</b></a>
+        <a class="command-card reveal" href="./guide.html#github"><span>04</span><small>USE REFERENCES</small><h3>좋은 코드를 참고하고 싶어요</h3><p>GitHub 검색·Clone·Fork와 안전한 분석법을 봅니다.</p><b>GitHub 활용 ↗</b></a>
+        <a class="command-card reveal" href="./guide.html#env"><span>05</span><small>SHIP SAFELY</small><h3>로그인하고 배포하고 싶어요</h3><p>Supabase, Google OAuth, 환경변수와 Vercel을 연결합니다.</p><b>배포 가이드 ↗</b></a>
+        <a class="command-card reveal danger" href="#reference"><span>!</span><small>DEBUG MODE</small><h3>분명 되던 것이 안 돼요</h3><p>증상별 진단표로 첫 번째 깨진 경계를 찾습니다.</p><b>문제 해결 ↘</b></a>
+      </div>
     </section>
 
     <section class="section split-section" id="difference" data-section="01">
@@ -234,34 +248,20 @@
 
     <section class="section curriculum-section" id="curriculum" data-section="06">
       <div class="section-heading reveal">
-        <p class="eyebrow">06 · NOTION CLASS ARCHIVE</p>
-        <h2>수업의 전체 과정을<br />원문으로 다시 확인합니다.</h2>
-        <p>화면 설계에서 배포와 인증, MD 하네스, 이후 확장 개발까지 ①~⑦ 순서로 이어지는 노션 수업 자료입니다.</p>
+        <p class="eyebrow">06 · COMPLETE LEARNING MAP</p>
+        <h2>도구가 아니라,<br />만드는 흐름으로 정리했습니다.</h2>
+        <p>초반의 API·Postman·Agentria부터 참고 코드 탐색, 화면 설계, 데이터베이스와 배포까지 수업 내용을 여섯 개의 큰 단계로 묶었습니다.</p>
       </div>
-      <div class="curriculum-track" aria-label="노션 수업 자료 1편부터 7편까지">
-        <a class="curriculum-card reveal" href="https://www.notion.so/3a4a31731391816db994c7ee6ec0a7af" target="_blank" rel="noreferrer">
-          <span>①</span><small>DESIGN START</small><h3>Figma 기초 → Bolt 첫 화면</h3><p>Frame·Prototype을 만들고 첫 화면을 실제 코드로 변환합니다.</p><b>원문 보기 ↗</b>
-        </a>
-        <a class="curriculum-card reveal" href="https://www.notion.so/3a4a3173139181f4954eedd7462f658c" target="_blank" rel="noreferrer">
-          <span>②</span><small>BUILD & DEPLOY</small><h3>여러 화면 → GitHub → Vercel</h3><p>Bolt 화면을 연결하고 Hermes API와 환경변수, 실제 배포까지 진행합니다.</p><b>원문 보기 ↗</b>
-        </a>
-        <a class="curriculum-card reveal" href="https://www.notion.so/3a5a3173139181e4b1d7cea0fd099fc5" target="_blank" rel="noreferrer">
-          <span>③</span><small>PROJECT RULES</small><h3>최종 프로젝트 공통 규칙</h3><p>Google 로그인, Gmail, Supabase, 관리자, LLM과 배포 기준을 정리합니다.</p><b>원문 보기 ↗</b>
-        </a>
-        <a class="curriculum-card reveal" href="https://www.notion.so/3a6a31731391817d9398dc0594361342" target="_blank" rel="noreferrer">
-          <span>④</span><small>KICKOFF</small><h3>설계 → 문서화 → Hermes 분석</h3><p>대상 사용자와 기능 범위를 정하고 프로젝트 문서 4종을 준비합니다.</p><b>원문 보기 ↗</b>
-        </a>
-        <a class="curriculum-card reveal" href="https://www.notion.so/3a6a317313918196b380d167496c3902" target="_blank" rel="noreferrer">
-          <span>⑤</span><small>MD TEMPLATE</small><h3>Hermes 공통 MD 템플릿</h3><p>지도·맛집·별점·Gmail·Supabase 예제로 하네스 문서를 작성합니다.</p><b>원문 보기 ↗</b>
-        </a>
-        <a class="curriculum-card reveal featured" href="https://www.notion.so/3a9a31731391818297e0ec70a5ebb6c9" target="_blank" rel="noreferrer">
-          <span>⑥</span><small>MASTERCLASS</small><h3>에이전트 AI 웹앱 마스터클래스</h3><p>MD 하네스부터 Hermes, Vercel, Supabase와 Google 로그인을 하나로 연결합니다.</p><b>원문 보기 ↗</b>
-        </a>
-        <a class="curriculum-card reveal" href="https://www.notion.so/3aba317313918183a1e9eb5887d9292f" target="_blank" rel="noreferrer">
-          <span>⑦</span><small>ITERATION</small><h3>프롬프트로 확장 개발</h3><p>검토 → 계획 → 개발 → 확인 순서를 지키며 작은 기능을 빠르게 확장합니다.</p><b>원문 보기 ↗</b>
-        </a>
+      <div class="learning-route reveal" aria-label="수업의 세 단계"><span><b>FOUNDATION</b> API와 협업의 언어</span><i></i><span><b>BUILD</b> 화면과 에이전트 구현</span><i></i><span><b>SHIP</b> 데이터·인증·배포</span></div>
+      <div class="curriculum-track" aria-label="여섯 개의 수업 대분류">
+        <article class="curriculum-card reveal foundation"><span>01</span><small>API LITERACY</small><h3>API를 읽고 Postman으로 검증하기</h3><p>요청·응답, URL과 endpoint, GET·POST, Header·Params·Body, JSON, 상태 코드를 이해하고 실제 요청을 먼저 성공시킵니다.</p><ul><li>Postman 요청·응답 확인</li><li>환경변수와 인증 키</li><li>성공 형식을 API_CONTRACT.md로 기록</li></ul><a href="./guide.html#api">API 실습 가이드 ↗</a></article>
+        <article class="curriculum-card reveal foundation featured"><span>02</span><small>AGENT & OPEN DATA</small><h3>Agentria와 외부 데이터 연결하기</h3><p>Agentria의 어빌리티·에이전트를 API로 호출하고, 필요한 데이터를 공공·플랫폼 API에서 찾아 서비스 기능으로 연결합니다.</p><ul><li>Agentria API · 저장·조회</li><li>data.go.kr 공공데이터</li><li>네이버 · 카카오 · Google API</li></ul><a href="./guide.html#providers">서비스별 설정 보기 ↗</a></article>
+        <article class="curriculum-card reveal foundation"><span>03</span><small>GITHUB WORKFLOW</small><h3>코드를 저장하고 좋은 사례에서 배우기</h3><p>저장소·commit·push·branch를 익히고, 다른 공개 프로젝트를 검색·clone·fork하여 구조와 구현 방식을 에이전트의 참고 자료로 제공합니다.</p><ul><li>README·License·의존성 확인</li><li>공개 저장소 검색과 Clone</li><li>분석 후 내 프로젝트에 재설계</li></ul><a href="./guide.html#github">GitHub 실습 가이드 ↗</a></article>
+        <article class="curriculum-card reveal build"><span>04</span><small>DESIGN TO APP</small><h3>아이디어를 화면과 동작으로 바꾸기</h3><p>Figma로 Frame과 Prototype을 설계하고 Bolt로 첫 화면과 여러 페이지를 만든 뒤 실제 로컬 프로젝트로 옮깁니다.</p><ul><li>사용자·문제·입출력 정의</li><li>와이어프레임과 화면 연결</li><li>로컬 실행과 기능 단위 점검</li></ul></article>
+        <article class="curriculum-card reveal build"><span>05</span><small>AGENT HARNESS</small><h3>에이전트가 헤매지 않게 문서화하기</h3><p>프로젝트 목표와 화면, 데이터, API 계약, 환경변수 규칙을 MD 하네스로 남기고 검토 → 계획 → 개발 → 확인 순서로 확장합니다.</p><ul><li>PROJECT·UI·DATA·API 문서</li><li>Hermes/Codex에 참고 자료 제공</li><li>작은 단위의 프롬프트 개발</li></ul></article>
+        <article class="curriculum-card reveal ship"><span>06</span><small>BACKEND TO RELEASE</small><h3>데이터·로그인·배포를 완성하기</h3><p>Supabase 테이블과 RLS, Google OAuth, 서버 전용 환경변수를 연결하고 GitHub에서 Vercel로 실제 운영 버전을 배포합니다.</p><ul><li>사용자별 데이터와 관리자 권한</li><li><code>.env.local</code>·<code>.gitignore</code> 보안</li><li>빌드 로그·운영 URL 검증</li></ul><a href="./guide.html">서비스 연결 가이드 ↗</a></article>
       </div>
-      <p class="curriculum-note reveal">번호를 따라 순서대로 읽거나, 현재 작업과 가장 가까운 카드에서 바로 시작할 수 있습니다.</p>
+      <div class="notion-archive reveal" aria-label="노션 수업 원문 모음"><div><small>RELATED CLASS NOTES</small><strong>노션 원문은 해당 단계의 참고 기록으로 연결합니다.</strong></div><nav><a href="https://www.notion.so/3a3a3173139180f586c6e10e6ca84b96" target="_blank" rel="noreferrer">초기 Agentria ↗</a><a href="https://www.notion.so/3a4a31731391816db994c7ee6ec0a7af" target="_blank" rel="noreferrer">① 화면 시작 ↗</a><a href="https://www.notion.so/3a4a3173139181f4954eedd7462f658c" target="_blank" rel="noreferrer">② 연결·배포 ↗</a><a href="https://www.notion.so/3a5a3173139181e4b1d7cea0fd099fc5" target="_blank" rel="noreferrer">③ 공통 규칙 ↗</a><a href="https://www.notion.so/3a6a31731391817d9398dc0594361342" target="_blank" rel="noreferrer">④ 프로젝트 설계 ↗</a><a href="https://www.notion.so/3a6a317313918196b380d167496c3902" target="_blank" rel="noreferrer">⑤ MD 템플릿 ↗</a><a href="https://www.notion.so/3a9a31731391818297e0ec70a5ebb6c9" target="_blank" rel="noreferrer">⑥ 통합 실습 ↗</a><a href="https://www.notion.so/3aba317313918183a1e9eb5887d9292f" target="_blank" rel="noreferrer">⑦ 확장 개발 ↗</a></nav></div>
     </section>
 
     <section class="section evidence-section" id="evidence" data-section="06">
@@ -273,6 +273,49 @@
         <div class="console-row"><span class="console-time">09:46</span><span class="console-type test">TEST</span><p><code>npm run build</code> 성공 · 로그인 리다이렉트 확인.</p></div>
         <div class="console-row"><span class="console-time">09:47</span><span class="console-type doc">DOC</span><p><code>WORKLOG.md</code>에 변경 이유와 확인 결과를 기록했습니다.</p></div>
         <div class="console-footer"><strong>“완료했습니다”보다 실행 결과가 더 강한 증거입니다.</strong></div>
+      </div>
+    </section>
+
+    <section class="section reference-section" id="reference" data-section="07">
+      <div class="reference-head reveal"><div><p class="eyebrow">07 · FIELD REFERENCE</p><h2>수업이 끝난 뒤에도<br />계속 쓰는 작업대.</h2></div><p>프롬프트를 복사하고, 증상으로 문제를 찾고, 공식 문서에서 바뀐 설정을 확인하세요. 기억에 의존하지 않는 것이 이 수업의 마지막 원칙입니다.</p></div>
+
+      <div class="reference-tabs reveal" role="tablist" aria-label="실전 레퍼런스"><button class="active" type="button" role="tab" aria-selected="true" data-ref-tab="prompts">프롬프트 키트</button><button type="button" role="tab" aria-selected="false" data-ref-tab="debug">문제 해결</button><button type="button" role="tab" aria-selected="false" data-ref-tab="links">공식 링크</button></div>
+
+      <div class="reference-panel active" data-ref-panel="prompts">
+        <article class="prompt-kit reveal"><small>01 · ORIENT</small><h3>먼저 읽고 계획하게 하기</h3><pre id="ref-prompt-1">현재 프로젝트의 구조, README와 MD, 실행 명령을 먼저 확인해줘. 아직 수정하지 말고 목표·현재 상태·수정할 파일·작업 순서·위험을 보고해줘.</pre><button type="button" data-copy="#ref-prompt-1">COPY PROMPT</button></article>
+        <article class="prompt-kit reveal"><small>02 · REFERENCE</small><h3>다른 GitHub를 안전하게 참고하기</h3><pre id="ref-prompt-2">참고 저장소의 README, 라이선스, 폴더 구조와 핵심 패턴을 분석해줘. 코드를 그대로 복사하지 말고 우리 구조에 적용할 아이디어와 충돌 가능성만 제안해줘.</pre><button type="button" data-copy="#ref-prompt-2">COPY PROMPT</button></article>
+        <article class="prompt-kit reveal"><small>03 · DEBUG</small><h3>첫 번째 깨진 경계 찾기</h3><pre id="ref-prompt-3">UI 클릭 → 요청 → API Route → 외부 서비스/DB → 응답 → 화면 표시 순서로 추적해줘. 추측하지 말고 각 단계의 실제 로그와 상태 코드로 첫 실패 지점을 찾아줘.</pre><button type="button" data-copy="#ref-prompt-3">COPY PROMPT</button></article>
+        <article class="prompt-kit reveal"><small>04 · VERIFY</small><h3>완료 보고를 증거로 바꾸기</h3><pre id="ref-prompt-4">수정 결과를 실제로 검증해줘. 변경 파일, 실행·빌드 결과, 브라우저 오류, 모바일 화면, 남은 문제를 확인한 사실과 함께 보고하고 관련 MD만 갱신해줘.</pre><button type="button" data-copy="#ref-prompt-4">COPY PROMPT</button></article>
+      </div>
+
+      <div class="reference-panel" data-ref-panel="debug" hidden>
+        <div class="debug-matrix">
+          <article><span>401 / 403</span><h3>인증 또는 권한</h3><p>키·토큰 전달 위치, 만료, Scope, RLS 정책과 서버/브라우저 키 구분을 확인합니다.</p></article>
+          <article><span>CORS</span><h3>브라우저 호출 차단</h3><p>외부 API를 브라우저에서 직접 부르지 말고 앱의 서버 Route를 통해 호출합니다.</p></article>
+          <article><span>404</span><h3>주소 또는 Route</h3><p>Base URL, endpoint path, HTTP Method, 배포 환경의 Root Directory를 확인합니다.</p></article>
+          <article><span>429</span><h3>요청 한도</h3><p>Quota와 Rate Limit을 확인하고 캐시, 지수 백오프, 재시도 제한을 설계합니다.</p></article>
+          <article><span>OAUTH LOOP</span><h3>로그인이 계속 돌아옴</h3><p>Redirect URI의 철자·프로토콜·도메인과 Supabase Allow List를 정확히 맞춥니다.</p></article>
+          <article><span>BUILD FAIL</span><h3>로컬은 되는데 배포 실패</h3><p>대소문자 경로, 누락된 환경변수, Node 버전, 의존성 lockfile과 Build Logs를 봅니다.</p></article>
+          <article><span>EMPTY DATA</span><h3>성공인데 데이터가 없음</h3><p>응답 JSON의 실제 중첩 구조, query parameter, 사용자 ID와 RLS 필터를 확인합니다.</p></article>
+          <article><span>SECRET LEAK</span><h3>키를 Git에 올림</h3><p>파일 삭제로 끝내지 말고 즉시 키를 폐기·재발급한 뒤 Git 기록과 배포 환경을 점검합니다.</p></article>
+        </div>
+      </div>
+
+      <div class="reference-panel" data-ref-panel="links" hidden>
+        <div class="link-atlas">
+          <a href="https://agentria.ai/docs" target="_blank" rel="noreferrer"><small>AGENT</small><strong>Agentria Docs</strong><span>노드·어빌리티·에이전트 ↗</span></a>
+          <a href="https://learning.postman.com/docs/getting-started/overview/" target="_blank" rel="noreferrer"><small>API TEST</small><strong>Postman Learning</strong><span>요청·환경·Collection ↗</span></a>
+          <a href="https://docs.github.com/" target="_blank" rel="noreferrer"><small>VERSION</small><strong>GitHub Docs</strong><span>저장소·Clone·Fork ↗</span></a>
+          <a href="https://www.data.go.kr/" target="_blank" rel="noreferrer"><small>OPEN DATA</small><strong>공공데이터포털</strong><span>국가 Open API ↗</span></a>
+          <a href="https://developers.naver.com/main/" target="_blank" rel="noreferrer"><small>PLATFORM</small><strong>NAVER Developers</strong><span>검색·로그인 API ↗</span></a>
+          <a href="https://developers.kakao.com/docs" target="_blank" rel="noreferrer"><small>PLATFORM</small><strong>Kakao Developers</strong><span>지도·로그인·공유 ↗</span></a>
+          <a href="https://console.cloud.google.com/apis/library" target="_blank" rel="noreferrer"><small>CLOUD API</small><strong>Google API Library</strong><span>API 활성화·Credentials ↗</span></a>
+          <a href="https://supabase.com/docs" target="_blank" rel="noreferrer"><small>BACKEND</small><strong>Supabase Docs</strong><span>Database·Auth·RLS ↗</span></a>
+          <a href="https://vercel.com/docs" target="_blank" rel="noreferrer"><small>DEPLOY</small><strong>Vercel Docs</strong><span>배포·환경변수·로그 ↗</span></a>
+          <a href="https://developer.mozilla.org/ko/docs/Web/HTTP" target="_blank" rel="noreferrer"><small>WEB CORE</small><strong>MDN HTTP</strong><span>Method·Status·Header ↗</span></a>
+          <a href="https://oauth.net/2/" target="_blank" rel="noreferrer"><small>AUTH</small><strong>OAuth 2.0</strong><span>Authorization 개념 ↗</span></a>
+          <a href="https://git-scm.com/book/ko/v2" target="_blank" rel="noreferrer"><small>GIT</small><strong>Pro Git 한국어</strong><span>Git 전체 교과서 ↗</span></a>
+        </div>
       </div>
     </section>
 

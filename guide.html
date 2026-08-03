@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Vercel, Supabase, Google Cloud Console을 처음 연결하는 실습 가이드" />
+  <meta name="description" content="API, Postman, Agentria, GitHub부터 Vercel, Supabase, Google Cloud까지 연결하는 실습 가이드" />
   <meta name="theme-color" content="#07090d" />
   <title>서비스 연결 가이드 | AI Agent Engineering</title>
   <link rel="stylesheet" href="./styles.css" />
@@ -13,17 +13,19 @@
   <script defer src="./guide.js?v=20260803"></script>
 </head>
 <body class="guide-page">
+  <div class="boot-screen" aria-hidden="true"><div class="boot-mark">A</div><p>LOADING PRACTICAL PLAYBOOK</p><div class="boot-track"><span></span></div><b>00</b></div>
   <div class="noise" aria-hidden="true"></div>
   <div class="cursor-glow" aria-hidden="true"></div>
   <div class="scroll-progress" aria-hidden="true"><span></span></div>
+  <div class="page-hud" aria-hidden="true"><span>PRACTICAL PLAYBOOK · 2026</span><b data-guide-hud>00 / MAP</b></div>
 
   <header class="topbar guide-topbar">
     <a class="brand" href="./index.html" aria-label="수업 요약으로 돌아가기">
       <span class="brand-mark">A</span><span>Agent Engineering</span>
     </a>
     <nav class="nav guide-nav" aria-label="가이드 섹션">
-      <a href="#map">연결 지도</a><a href="#vercel">Vercel</a><a href="#supabase">Supabase</a>
-      <a href="#google">Google</a><a href="#env">환경변수</a><a href="#check">검증</a><a href="#sources">수업 원문</a>
+      <a href="#map">연결 지도</a><a href="#api">API·Postman</a><a href="#github">GitHub</a>
+      <a href="#vercel">Vercel</a><a href="#supabase">Supabase</a><a href="#google">Google</a><a href="#env">환경변수</a><a href="#sources">자료</a>
     </nav>
     <a class="back-link" href="./index.html">← 수업 요약</a>
   </header>
@@ -31,12 +33,13 @@
   <main>
     <section class="guide-hero guide-shell" id="top">
       <div class="guide-kicker">PRACTICAL SETUP · 2026 EDITION</div>
-      <h1>첫 로그인부터<br /><span class="gradient-text">실제 배포까지.</span></h1>
-      <p>Vercel, Supabase, Google Cloud Console을 하나의 로그인 흐름으로 연결합니다. 화면을 순서대로 따라가고, 각 단계의 완료 조건을 확인하세요.</p>
+      <h1>첫 요청부터<br /><span class="gradient-text">실제 배포까지.</span></h1>
+      <p>API가 무엇인지 이해하고 Postman으로 검증하는 첫 단계부터, Agentria·GitHub·Supabase·Google Cloud·Vercel을 실제 앱으로 연결하는 과정까지 한 흐름으로 안내합니다.</p>
       <div class="hero-route" aria-label="서비스 연결 흐름">
-        <span><b>01</b> GitHub</span><i></i><span><b>02</b> Vercel</span><i></i>
-        <span><b>03</b> Supabase</span><i></i><span><b>04</b> Google OAuth</span><i></i><span><b>05</b> App</span>
+        <span><b>01</b> API 검증</span><i></i><span><b>02</b> GitHub</span><i></i>
+        <span><b>03</b> App 구현</span><i></i><span><b>04</b> DB·Auth</span><i></i><span><b>05</b> 배포</span>
       </div>
+      <div class="guide-dashboard" aria-label="가이드 사용법"><article><small>IF YOU ARE LOST</small><strong>위에서 아래로</strong><p>API → GitHub → Backend → Deploy 순서로 진행합니다.</p></article><article><small>IF SOMETHING FAILS</small><strong>첫 경계부터</strong><p>화면 → 요청 → 서버 → 외부 서비스 → 응답을 추적합니다.</p></article><article><small>BEFORE YOU SHARE</small><strong>Secret scan</strong><p><code>.env.local</code>과 Git 기록을 마지막에 확인합니다.</p></article></div>
       <div class="guide-alert"><span>SECURITY</span> 실제 키·비밀번호·토큰은 문서나 GitHub에 기록하지 않습니다. 이 페이지의 값은 모두 자리표시자입니다.</div>
     </section>
 
@@ -58,8 +61,56 @@
       </div>
     </section>
 
+    <section class="guide-section guide-shell platform" id="api">
+      <div class="guide-heading"><span>01</span><div><p>API & POSTMAN</p><h2>코드보다 먼저 요청을 성공시킵니다</h2></div><a href="https://learning.postman.com/docs/use/send-requests/requests/" target="_blank" rel="noreferrer">Postman 문서 ↗</a></div>
+      <div class="api-anatomy" aria-label="API 요청과 응답 구조">
+        <article><small>REQUEST</small><strong><i>GET</i> /v1/items?area=서울</strong><p><b>URL·Method</b>로 할 일을 정하고, Params·Headers·Body에 필요한 값을 보냅니다.</p></article>
+        <span>HTTP<br />→</span>
+        <article><small>RESPONSE</small><strong><i>200</i> application/json</strong><p><b>Status code</b>로 성공 여부를 확인하고 JSON의 실제 필드와 오류 메시지를 읽습니다.</p></article>
+      </div>
+      <div class="api-glossary" aria-label="API 핵심 용어">
+        <article><b>Base URL</b><p>서비스 공통 주소</p><code>https://api.example.com</code></article><article><b>Endpoint</b><p>특정 기능의 경로</p><code>/v1/search</code></article><article><b>Method</b><p>조회·생성·수정·삭제</p><code>GET · POST · PATCH · DELETE</code></article><article><b>Headers</b><p>인증·데이터 형식 정보</p><code>Authorization · Content-Type</code></article><article><b>Params / Body</b><p>서버에 전달할 입력</p><code>?page=1 · { "name": "Kim" }</code></article><article><b>Status</b><p>요청 처리 결과</p><code>2xx · 4xx · 5xx</code></article>
+      </div>
+      <div class="postman-steps">
+        <article><em>1</em><h3>문서에서 계약 찾기</h3><p>Base URL, endpoint, Method, 인증 방식, 필수 Params·Headers·Body, 응답 예시를 표시합니다.</p></article>
+        <article><em>2</em><h3>요청 조립</h3><p>Postman에서 Method와 URL을 고르고 문서대로 Authorization, Params, Headers, Body를 입력합니다.</p></article>
+        <article><em>3</em><h3>Send 후 응답 읽기</h3><p><code>2xx</code> 성공, <code>4xx</code> 요청·인증 문제, <code>5xx</code> 서버 문제로 먼저 나누고 JSON 구조를 확인합니다.</p></article>
+        <article><em>4</em><h3>비밀값 분리</h3><p><code>{{base_url}}</code>, <code>{{api_key}}</code>처럼 Postman 환경변수를 사용하고 공유 자료에는 실제 값을 넣지 않습니다.</p></article>
+        <article><em>5</em><h3>성공 요청 저장</h3><p>Collection에 저장하고 Method·URL·Header 이름·Body 형식·성공 응답을 <code>API_CONTRACT.md</code>에 옮깁니다.</p></article>
+        <article><em>6</em><h3>앱 서버에서 재현</h3><p>에이전트에게 성공한 계약을 제공해 서버 Route로 구현합니다. 비밀키를 브라우저 fetch에 넣지 않습니다.</p></article>
+      </div>
+      <div class="agentria-lab">
+        <div><small>AGENTRIA LAB</small><h3>어빌리티를 만들고 에이전트를 API로 호출합니다</h3><p>수업의 저장·조회 실습은 Agentria에서 필요한 기능을 노드와 어빌리티로 구성하고 에이전트로 릴리즈한 뒤, 외부 앱이 발급된 endpoint를 호출하는 흐름입니다.</p></div>
+        <ol><li><b>01</b> 어빌리티·에이전트 구성</li><li><b>02</b> 에이전트 릴리즈와 API key 발급</li><li><b>03</b> Postman에서 <code>X-API-KEY</code>와 요청 형식 검증</li><li><b>04</b> 앱 서버 환경변수로 연결</li></ol>
+        <a href="https://agentria.ai/docs/agent-endpoint-ko" target="_blank" rel="noreferrer">Agentria 공식 Endpoint 가이드 ↗</a>
+      </div>
+    </section>
+
+    <section class="guide-section guide-shell" id="providers">
+      <div class="guide-heading"><span>02</span><div><p>PUBLIC & PLATFORM DATA</p><h2>서비스가 달라도 연결 순서는 같습니다</h2></div></div>
+      <div class="provider-flow"><span>서비스 선택</span><i>→</i><span>앱·프로젝트 생성</span><i>→</i><span>API 활성화·키 발급</span><i>→</i><span>Postman 검증</span><i>→</i><span>서버에서 호출</span></div>
+      <div class="provider-grid">
+        <article><small>PUBLIC DATA</small><h3>공공데이터포털</h3><p>회원가입 → Open API 검색 → 활용신청 → 인증키 발급 → 참고문서의 요청 URL·파라미터 확인 → 미리보기나 Postman으로 응답을 점검합니다.</p><a href="https://www.data.go.kr/" target="_blank" rel="noreferrer">data.go.kr ↗</a></article>
+        <article><small>NAVER</small><h3>검색·지도·로그인 등</h3><p>Developers에서 애플리케이션을 등록하고 사용할 API와 환경을 선택합니다. 발급된 Client ID/Secret의 전달 위치는 각 API 문서의 Header·OAuth 규칙을 따릅니다.</p><a href="https://developers.naver.com/apps/" target="_blank" rel="noreferrer">애플리케이션 등록 ↗</a></article>
+        <article><small>KAKAO</small><h3>지도·로그인·공유 등</h3><p>Developers에서 앱을 만들고 제품을 활성화합니다. REST API key, 플랫폼, Redirect URI, 동의 항목을 설정하고 제공되는 REST API 테스트 도구나 Postman으로 확인합니다.</p><a href="https://developers.kakao.com/docs/latest/ko/getting-started/app" target="_blank" rel="noreferrer">앱 시작 가이드 ↗</a></article>
+        <article><small>GOOGLE CLOUD</small><h3>Maps·YouTube·Gmail 등</h3><p>Cloud 프로젝트 생성 → API Library에서 API 활성화 → Credentials에서 API key·OAuth client·service account 중 용도에 맞는 인증을 만들고 사용처와 API 제한을 설정합니다.</p><a href="https://console.cloud.google.com/apis/library" target="_blank" rel="noreferrer">API Library ↗</a></article>
+      </div>
+      <div class="guide-alert"><span>AUTH CHECK</span> 공개 데이터 조회에는 API key가 흔하지만, 사용자의 비공개 데이터나 로그인은 OAuth 동의·토큰이 필요합니다. 서비스별 공식 문서의 인증 방식을 우선합니다.</div>
+    </section>
+
+    <section class="guide-section guide-shell platform" id="github">
+      <div class="guide-heading"><span>03</span><div><p>GITHUB & REFERENCE CODE</p><h2>검색하고, 받아 보고, 내 방식으로 고칩니다</h2></div><a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository" target="_blank" rel="noreferrer">GitHub 문서 ↗</a></div>
+      <div class="github-path">
+        <article><em>01</em><h3>검색</h3><p>기능명 + 프레임워크로 공개 저장소를 찾고 최근 활동, stars보다 먼저 README와 실제 파일 구조를 봅니다.</p></article>
+        <article><em>02</em><h3>검토</h3><p><code>README</code>, <code>LICENSE</code>, 의존성, 환경변수 예시, 실행 방법, 보안 이슈를 확인합니다.</p></article>
+        <article><em>03</em><h3>Clone 또는 Fork</h3><p>읽고 실험할 때는 Clone, 원본과 연결된 내 복사본에서 변경·기여하려면 Fork가 적합합니다.</p></article>
+        <article><em>04</em><h3>에이전트에게 참고시키기</h3><p>두 프로젝트를 함께 열고 “구조와 패턴을 분석하되 코드를 그대로 복사하지 말고 현재 규칙에 맞게 계획하라”고 요청합니다.</p></article>
+      </div>
+      <div class="reference-prompt"><small>REFERENCE PROMPT</small><p>“참고 저장소의 README, 폴더 구조, 핵심 구현과 라이선스를 먼저 분석해줘. 우리 프로젝트의 기존 코드와 충돌 여부를 보고하고, 가져올 패턴만 목록으로 제안해줘. 승인 전에는 수정하지 마.”</p></div>
+    </section>
+
     <section class="guide-section guide-shell platform" id="vercel">
-      <div class="guide-heading"><span>01</span><div><p>DEPLOYMENT</p><h2>Vercel 프로젝트 만들기</h2></div><a href="https://vercel.com/new" target="_blank" rel="noreferrer">Vercel 열기 ↗</a></div>
+      <div class="guide-heading"><span>04</span><div><p>DEPLOYMENT</p><h2>Vercel 프로젝트 만들기</h2></div><a href="https://vercel.com/new" target="_blank" rel="noreferrer">Vercel 열기 ↗</a></div>
       <div class="step-grid">
         <article class="step-card"><em>1</em><h3>GitHub로 로그인</h3><p>Vercel에 접속해 <b>Continue with GitHub</b>를 선택하고 저장소 접근 권한을 승인합니다.</p><small>완료: Dashboard가 보임</small></article>
         <article class="step-card"><em>2</em><h3>저장소 가져오기</h3><p><b>Add New → Project</b>에서 GitHub 저장소를 찾고 <b>Import</b>를 누릅니다. 안 보이면 GitHub App 권한을 확인합니다.</p><small>완료: Configure Project 화면</small></article>
@@ -71,7 +122,7 @@
     </section>
 
     <section class="guide-section guide-shell platform" id="supabase">
-      <div class="guide-heading"><span>02</span><div><p>DATABASE & AUTH</p><h2>Supabase 프로젝트 만들기</h2></div><a href="https://supabase.com/dashboard" target="_blank" rel="noreferrer">Dashboard 열기 ↗</a></div>
+      <div class="guide-heading"><span>05</span><div><p>DATABASE & AUTH</p><h2>Supabase 프로젝트 만들기</h2></div><a href="https://supabase.com/dashboard" target="_blank" rel="noreferrer">Dashboard 열기 ↗</a></div>
       <div class="step-grid">
         <article class="step-card"><em>1</em><h3>로그인과 조직 선택</h3><p><b>Sign in with GitHub</b>로 로그인한 뒤 개인 또는 수업용 Organization을 선택합니다.</p><small>완료: Projects 화면</small></article>
         <article class="step-card"><em>2</em><h3>New Project</h3><p>이름, 강한 Database Password, 가까운 Region을 정합니다. 비밀번호는 암호 관리 도구에 따로 보관합니다.</p><small>완료: 프로젝트 Provisioning 종료</small></article>
@@ -84,7 +135,7 @@
     </section>
 
     <section class="guide-section guide-shell platform" id="google">
-      <div class="guide-heading"><span>03</span><div><p>SOCIAL LOGIN</p><h2>Google OAuth 연결하기</h2></div><a href="https://console.cloud.google.com/auth/overview" target="_blank" rel="noreferrer">Console 열기 ↗</a></div>
+      <div class="guide-heading"><span>06</span><div><p>SOCIAL LOGIN</p><h2>Google OAuth 연결하기</h2></div><a href="https://console.cloud.google.com/auth/overview" target="_blank" rel="noreferrer">Console 열기 ↗</a></div>
       <div class="oauth-flow">
         <div><small>1 · APP</small><strong>로그인 클릭</strong></div><i>→</i><div><small>2 · SUPABASE</small><strong>Google로 이동</strong></div><i>→</i><div><small>3 · GOOGLE</small><strong>사용자 동의</strong></div><i>→</i><div><small>4 · CALLBACK</small><strong>세션 발급</strong></div>
       </div>
@@ -100,7 +151,7 @@
     </section>
 
     <section class="guide-section guide-shell platform" id="env">
-      <div class="guide-heading"><span>04</span><div><p>ENVIRONMENT VARIABLES</p><h2>환경변수 이름과 위치</h2></div></div>
+      <div class="guide-heading"><span>07</span><div><p>ENVIRONMENT VARIABLES</p><h2>환경변수 이름과 위치</h2></div></div>
       <div class="guide-alert env-alert"><span>MUST DO</span> API 키와 비밀번호 같은 실제 값은 <code>.env.local</code>에 저장하고, <code>.gitignore</code>에 등록해 GitHub 커밋과 공유 대상에서 반드시 제외합니다.</div>
       <div class="framework-switch" role="group" aria-label="프레임워크 선택"><button class="active" type="button" data-framework="next">Next.js</button><button type="button" data-framework="vite">Vite</button></div>
       <div class="env-layout">
@@ -133,7 +184,7 @@ NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_xxxxx</code></pre>
     </section>
 
     <section class="guide-section guide-shell" id="check">
-      <div class="guide-heading"><span>05</span><div><p>FINAL CHECK</p><h2>끝났다고 판단하는 기준</h2></div></div>
+      <div class="guide-heading"><span>08</span><div><p>FINAL CHECK</p><h2>끝났다고 판단하는 기준</h2></div></div>
       <div class="checklist" data-checklist>
         <label><input type="checkbox" /><span>GitHub 저장소의 <code>main</code> 브랜치가 Vercel Production에 연결됐다.</span></label>
         <label><input type="checkbox" /><span>Vercel Build Logs가 오류 없이 Ready 상태다.</span></label>
@@ -150,14 +201,22 @@ NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_xxxxx</code></pre>
     <section class="guide-section guide-shell source-section" id="sources">
       <div class="guide-heading"><span>↗</span><div><p>CLASS NOTES & OFFICIAL DOCS</p><h2>노션 수업 자료와 공식 문서</h2></div></div>
       <div class="source-grid">
-        <a href="https://www.notion.so/3a4a31731391816db994c7ee6ec0a7af" target="_blank" rel="noreferrer"><small>NOTION · ①</small><strong>Figma 기초 → Bolt 첫 화면</strong><span>원문 보기 ↗</span></a>
-        <a href="https://www.notion.so/3a4a3173139181f4954eedd7462f658c" target="_blank" rel="noreferrer"><small>NOTION · ②</small><strong>여러 화면 → GitHub → Vercel 배포</strong><span>원문 보기 ↗</span></a>
-        <a href="https://www.notion.so/3a5a3173139181e4b1d7cea0fd099fc5" target="_blank" rel="noreferrer"><small>NOTION · ③</small><strong>최종 프로젝트 공통 규칙</strong><span>원문 보기 ↗</span></a>
-        <a href="https://www.notion.so/3a6a31731391817d9398dc0594361342" target="_blank" rel="noreferrer"><small>NOTION · ④</small><strong>AI 웹앱 프로젝트 킥오프</strong><span>원문 보기 ↗</span></a>
-        <a href="https://www.notion.so/3a6a317313918196b380d167496c3902" target="_blank" rel="noreferrer"><small>NOTION · ⑤</small><strong>Hermes 공통 MD 템플릿</strong><span>원문 보기 ↗</span></a>
-        <a href="https://www.notion.so/3a9a31731391818297e0ec70a5ebb6c9" target="_blank" rel="noreferrer"><small>NOTION · ⑥</small><strong>에이전트 AI 웹앱 마스터클래스</strong><span>원문 보기 ↗</span></a>
-        <a href="https://www.notion.so/3aba317313918183a1e9eb5887d9292f" target="_blank" rel="noreferrer"><small>NOTION · ⑦</small><strong>프롬프트로 확장 개발</strong><span>원문 보기 ↗</span></a>
+        <a href="https://www.notion.so/3a3a3173139180f586c6e10e6ca84b96" target="_blank" rel="noreferrer"><small>NOTION · EARLY CLASS</small><strong>Agentria 저장·조회 수업 메모</strong><span>원문 보기 ↗</span></a>
+        <a href="https://www.notion.so/3a4a31731391816db994c7ee6ec0a7af" target="_blank" rel="noreferrer"><small>NOTION · ①</small><strong>UI 기초와 첫 화면</strong><span>원문 보기 ↗</span></a>
+        <a href="https://www.notion.so/3a4a3173139181f4954eedd7462f658c" target="_blank" rel="noreferrer"><small>NOTION · ②</small><strong>화면 연결, API, 배포</strong><span>원문 보기 ↗</span></a>
+        <a href="https://www.notion.so/3a5a3173139181e4b1d7cea0fd099fc5" target="_blank" rel="noreferrer"><small>NOTION · ③</small><strong>프로젝트 보안·권한 규칙</strong><span>원문 보기 ↗</span></a>
+        <a href="https://www.notion.so/3a6a31731391817d9398dc0594361342" target="_blank" rel="noreferrer"><small>NOTION · ④</small><strong>기능 설계와 프로젝트 문서화</strong><span>원문 보기 ↗</span></a>
+        <a href="https://www.notion.so/3a6a317313918196b380d167496c3902" target="_blank" rel="noreferrer"><small>NOTION · ⑤</small><strong>에이전트 작업 문서 템플릿</strong><span>원문 보기 ↗</span></a>
+        <a href="https://www.notion.so/3a9a31731391818297e0ec70a5ebb6c9" target="_blank" rel="noreferrer"><small>NOTION · ⑥</small><strong>백엔드·인증·배포 통합 실습</strong><span>원문 보기 ↗</span></a>
+        <a href="https://www.notion.so/3aba317313918183a1e9eb5887d9292f" target="_blank" rel="noreferrer"><small>NOTION · ⑦</small><strong>기능 확장과 반복 개발</strong><span>원문 보기 ↗</span></a>
         <a href="https://www.notion.so/3aaa3173139180d583dbcb1f5cb9aa0c" target="_blank" rel="noreferrer"><small>NOTION · SUPPLEMENT</small><strong>Supabase 설정 실습</strong><span>원문 보기 ↗</span></a>
+        <a href="https://agentria.ai/docs/agent-endpoint-ko" target="_blank" rel="noreferrer"><small>OFFICIAL · AGENTRIA</small><strong>에이전트 API Endpoint</strong><span>문서 보기 ↗</span></a>
+        <a href="https://learning.postman.com/docs/use/send-requests/requests/" target="_blank" rel="noreferrer"><small>OFFICIAL · POSTMAN</small><strong>API 요청과 응답 확인</strong><span>문서 보기 ↗</span></a>
+        <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository" target="_blank" rel="noreferrer"><small>OFFICIAL · GITHUB</small><strong>저장소 Clone</strong><span>문서 보기 ↗</span></a>
+        <a href="https://www.data.go.kr/" target="_blank" rel="noreferrer"><small>OFFICIAL · PUBLIC DATA</small><strong>공공데이터포털</strong><span>사이트 열기 ↗</span></a>
+        <a href="https://developers.naver.com/apps/" target="_blank" rel="noreferrer"><small>OFFICIAL · NAVER</small><strong>애플리케이션 등록</strong><span>문서 보기 ↗</span></a>
+        <a href="https://developers.kakao.com/docs/latest/ko/getting-started/app" target="_blank" rel="noreferrer"><small>OFFICIAL · KAKAO</small><strong>앱 생성과 설정</strong><span>문서 보기 ↗</span></a>
+        <a href="https://docs.cloud.google.com/docs/authentication/api-keys" target="_blank" rel="noreferrer"><small>OFFICIAL · GOOGLE CLOUD</small><strong>API 키 생성과 제한</strong><span>문서 보기 ↗</span></a>
         <a href="https://vercel.com/docs/git" target="_blank" rel="noreferrer"><small>OFFICIAL · VERCEL</small><strong>Git 저장소 배포</strong><span>문서 보기 ↗</span></a>
         <a href="https://supabase.com/docs/guides/auth/social-login/auth-google" target="_blank" rel="noreferrer"><small>OFFICIAL · SUPABASE</small><strong>Google Social Login</strong><span>문서 보기 ↗</span></a>
         <a href="https://support.google.com/cloud/answer/15548748" target="_blank" rel="noreferrer"><small>OFFICIAL · GOOGLE</small><strong>Google Auth Platform</strong><span>문서 보기 ↗</span></a>

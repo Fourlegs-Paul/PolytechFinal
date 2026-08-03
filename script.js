@@ -79,13 +79,67 @@ const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 function setupNavigation() {
   const navLinks = qsa(".nav a");
   const sections = qsa("main section[id]");
+  const hud = qs("[data-hud-section]");
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
       navLinks.forEach(link => link.classList.toggle("active", link.hash === `#${entry.target.id}`));
+      if (hud) {
+        const name = entry.target.querySelector(".eyebrow")?.textContent?.split("·").pop()?.trim() || entry.target.id;
+        hud.textContent = `${entry.target.dataset.section || "00"} / ${name}`;
+      }
     });
   }, { rootMargin: "-45% 0px -45% 0px" });
   sections.forEach(section => observer.observe(section));
+}
+
+function setupReferenceTabs() {
+  qsa("[data-ref-tab]").forEach(button => button.addEventListener("click", () => {
+    qsa("[data-ref-tab]").forEach(item => {
+      const active = item === button;
+      item.classList.toggle("active", active);
+      item.setAttribute("aria-selected", String(active));
+    });
+    qsa("[data-ref-panel]").forEach(panel => {
+      const active = panel.dataset.refPanel === button.dataset.refTab;
+      panel.hidden = !active;
+      panel.classList.toggle("active", active);
+    });
+    window.ScrollTrigger?.refresh();
+  }));
+}
+
+function setupCinematic() {
+  const boot = qs(".boot-screen");
+  if (!boot) return;
+  if (reduceMotion || !window.gsap) {
+    boot.remove();
+    qsa("[data-count]").forEach(item => { item.textContent = item.dataset.count; });
+    return;
+  }
+
+  const bootValue = qs(".boot-screen>b");
+  const counter = { value: 0 };
+  gsap.timeline({ onComplete: () => boot.remove() })
+    .to(counter, { value: 100, duration: 1.1, ease: "power2.inOut", onUpdate: () => { bootValue.textContent = String(Math.round(counter.value)).padStart(2, "0"); } })
+    .to(".boot-track span", { width: "100%", duration: 1.1, ease: "power2.inOut" }, 0)
+    .to(".boot-mark", { rotation: 180, scale: .82, duration: .45, ease: "back.in(2)" }, .85)
+    .to(boot, { clipPath: "inset(0 0 100% 0)", duration: .8, ease: "power4.inOut" }, 1.15);
+
+  qsa("[data-count]").forEach(item => {
+    const target = Number(item.dataset.count);
+    const state = { value: 0 };
+    gsap.to(state, { value: target, duration: 1.4, delay: 1.6, ease: "power3.out", onUpdate: () => { item.textContent = `${Math.round(state.value)}${item.dataset.count === "20" ? "+" : ""}`; } });
+  });
+
+  qsa(".magnetic").forEach(button => {
+    button.addEventListener("pointermove", event => {
+      if (matchMedia("(pointer: coarse)").matches) return;
+      const rect = button.getBoundingClientRect();
+      gsap.to(button, { x: (event.clientX - rect.left - rect.width / 2) * .12, y: (event.clientY - rect.top - rect.height / 2) * .16, duration: .25 });
+    });
+    button.addEventListener("pointerleave", () => gsap.to(button, { x: 0, y: 0, duration: .5, ease: "elastic.out(1,.45)" }));
+  });
 }
 
 function setupProgressAndGlow() {
@@ -222,6 +276,33 @@ function setupMotion() {
       scrollTrigger: { trigger: ".future-principles", start: "top 82%", once: true }
     });
   });
+
+  gsap.from(".command-card", {
+    y: 90,
+    rotationX: -12,
+    opacity: 0,
+    stagger: .08,
+    duration: 1,
+    ease: "power4.out",
+    scrollTrigger: { trigger: ".command-grid", start: "top 82%", once: true }
+  });
+
+  gsap.to(".agent-orbit", {
+    rotation: 2.5,
+    scale: 1.04,
+    duration: 4,
+    repeat: -1,
+    yoyo: true,
+    ease: "sine.inOut"
+  });
+
+  qsa(".reference-head h2, .future-copy h2").forEach(element => {
+    gsap.from(element, { clipPath: "inset(0 0 100% 0)", y: 50, duration: 1.15, ease: "power4.out", scrollTrigger: { trigger: element, start: "top 82%", once: true } });
+  });
+
+  qsa(".debug-matrix article, .link-atlas a").forEach((element, index) => {
+    gsap.from(element, { y: 45, opacity: 0, rotateY: index % 2 ? 5 : -5, duration: .7, scrollTrigger: { trigger: element, start: "top 90%", once: true } });
+  });
 }
 
 function projectPreviewUrl(url, nonce = Date.now()) {
@@ -303,6 +384,8 @@ setupProgressAndGlow();
 setupTabs();
 setupCopy();
 setupTilt();
+setupReferenceTabs();
 setupMotion();
+setupCinematic();
 qs("#project-refresh")?.addEventListener("click", () => loadProjects({ refresh: true }));
 loadProjects();
