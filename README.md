@@ -27,6 +27,7 @@ node server.js --open
 - Next.js/Vite 환경변수 예시 전환 및 복사
 - Supabase publishable/secret 키 보안 구분
 - 노션 수업 원문과 최신 공식 문서 링크
+- 메인 페이지와 가이드에서 노션 ①~⑦ 전체 수업 원문 연결
 
 브라우저 주소는 `http://localhost:4173`입니다. Node.js 외 별도 패키지는 필요하지 않습니다.
 
