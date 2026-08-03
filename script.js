@@ -316,6 +316,15 @@ function projectPreviewUrl(url, nonce = Date.now()) {
   return `https://image.thum.io/get/width/900/crop/560/noanimate/${refreshableUrl}`;
 }
 
+function isVercelProject(project) {
+  try {
+    const hostname = new URL(project.url).hostname.toLowerCase();
+    return hostname === "vercel.app" || hostname.endsWith(".vercel.app");
+  } catch {
+    return false;
+  }
+}
+
 function createProjectCard(project, nonce) {
   const article = document.createElement("article");
   article.className = "project-card";
@@ -345,14 +354,78 @@ function createProjectCard(project, nonce) {
   address.textContent = project.url.replace(/^https?:\/\//, "").replace(/\/$/, "");
   identity.append(author, address);
   meta.append(avatar, identity);
+  const detail = document.createElement("div");
+  detail.className = "project-detail";
+  const title = document.createElement("h3");
+  title.textContent = project.title || "학생 프로젝트";
+  const summary = document.createElement("p");
+  summary.textContent = project.summary || "게시글에 등록된 Vercel 프로젝트입니다.";
+  const signals = document.createElement("div");
+  signals.className = "project-signals";
+  const published = project.publishedAt ? new Date(project.publishedAt).toLocaleDateString("ko-KR") : "날짜 확인 중";
+  [
+    `게시 ${published}`,
+    `조회 ${Number(project.views || 0)}`,
+    `♥ ${Number(project.likes || 0)}`,
+    `댓글 ${Number(project.commentCount || 0)}`
+  ].forEach(text => {
+    const badge = document.createElement("span");
+    badge.textContent = text;
+    signals.append(badge);
+  });
+  detail.append(title, summary, signals);
+
+  const comments = Array.isArray(project.comments) ? project.comments.slice(0, 2) : [];
+  if (comments.length) {
+    const commentBox = document.createElement("div");
+    commentBox.className = "project-comments";
+    const label = document.createElement("small");
+    label.textContent = "LATEST COMMENTS";
+    commentBox.append(label);
+    comments.forEach(comment => {
+      const line = document.createElement("p");
+      const name = document.createElement("b");
+      name.textContent = comment.author || "카페 멤버";
+      line.append(name, document.createTextNode(` ${comment.text || ""}`));
+      commentBox.append(line);
+    });
+    detail.append(commentBox);
+  }
+
+  const actions = document.createElement("div");
+  actions.className = "project-actions";
   const link = document.createElement("a");
   link.className = "project-open";
   link.href = project.url;
   link.target = "_blank";
   link.rel = "noopener noreferrer";
   link.textContent = "작품 열기 ↗";
-  article.append(previewLink, meta, link);
+  actions.append(link);
+  if (project.articleUrl) {
+    const articleLink = document.createElement("a");
+    articleLink.className = "project-article";
+    articleLink.href = project.articleUrl;
+    articleLink.target = "_blank";
+    articleLink.rel = "noopener noreferrer";
+    articleLink.textContent = "게시글 보기 ↗";
+    actions.append(articleLink);
+  }
+  article.append(previewLink, meta, detail, actions);
   return article;
+}
+
+function createEmptyProjectState(data) {
+  const empty = document.createElement("article");
+  empty.className = "voice-empty project-feed-empty";
+  const label = document.createElement("span");
+  label.textContent = "WAITING FOR TODAY'S POSTS";
+  const title = document.createElement("h3");
+  title.textContent = "오늘 이후 등록된 Vercel 작품이 아직 없습니다.";
+  const note = document.createElement("p");
+  const start = data.fromDate ? new Date(`${data.fromDate}T00:00:00+09:00`).toLocaleDateString("ko-KR") : "오늘";
+  note.textContent = `${start}부터 ‘결과물 자랑하기’ 게시판의 새 글을 확인합니다. 학생이 글 본문에 *.vercel.app 주소를 올리면 다음 동기화 때 이곳에 표시됩니다.`;
+  empty.append(label, title, note);
+  return empty;
 }
 
 async function loadProjects({ refresh = false } = {}) {
@@ -367,13 +440,17 @@ async function loadProjects({ refresh = false } = {}) {
     const response = await fetch(`./student-projects.json?t=${Date.now()}`, { cache: "no-store" });
     if (!response.ok) throw new Error("project feed unavailable");
     const data = await response.json();
-    if (!Array.isArray(data.projects) || data.projects.length === 0) throw new Error("project feed empty");
+    if (!Array.isArray(data.projects)) throw new Error("project feed invalid");
+    const projects = data.projects.filter(isVercelProject);
     const nonce = Date.now();
-    grid.replaceChildren(...data.projects.map(project => createProjectCard(project, nonce)));
-    status.textContent = `${data.projects.length} PROJECT LINKS SYNCED`;
+    grid.replaceChildren(...(projects.length ? projects.map(project => createProjectCard(project, nonce)) : [createEmptyProjectState(data)]));
+    const articleCount = Number(data.scan?.articles || 0);
+    status.textContent = projects.length
+      ? `${projects.length} VERCEL PROJECTS · ${articleCount} POSTS SCANNED`
+      : `0 PROJECTS · ${articleCount} POSTS SINCE ${data.fromDate || "TODAY"}`;
     if (updated) {
       const date = data.updatedAt ? new Date(data.updatedAt) : new Date();
-      updated.textContent = `피드 기준 ${date.toLocaleString("ko-KR")}`;
+      updated.textContent = `게시판 동기화 ${date.toLocaleString("ko-KR")}`;
     }
   } catch {
     status.textContent = "PROJECT FEED UNAVAILABLE";
